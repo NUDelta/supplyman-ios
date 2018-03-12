@@ -7,8 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		592250EA20548CAD007286A2 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 592250E920548CAD007286A2 /* Icon.png */; };
-		592250EC2054C96E007286A2 /* Pretracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 592250EB2054C96E007286A2 /* Pretracker.swift */; };
 		592250EF2054CD0D007286A2 /* noyes.gpx in Resources */ = {isa = PBXBuildFile; fileRef = 592250EE2054CD0D007286A2 /* noyes.gpx */; };
 		592FCEDA1FBA881A00BD7251 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 592FCED91FBA881A00BD7251 /* AppDelegate.swift */; };
 		592FCEDC1FBA881A00BD7251 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 592FCEDB1FBA881A00BD7251 /* ViewController.swift */; };
@@ -19,14 +17,17 @@
 		592FCEFA1FBA881A00BD7251 /* otgSMUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 592FCEF91FBA881A00BD7251 /* otgSMUITests.swift */; };
 		592FCF091FBA885C00BD7251 /* requestVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 592FCF081FBA885C00BD7251 /* requestVC.swift */; };
 		592FCF0B1FBA886B00BD7251 /* progressVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 592FCF0A1FBA886B00BD7251 /* progressVC.swift */; };
-		592FCF0D1FBA888000BD7251 /* NotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 592FCF0C1FBA888000BD7251 /* NotificationManager.swift */; };
 		592FCF101FBA88F200BD7251 /* Task.swift in Sources */ = {isa = PBXBuildFile; fileRef = 592FCF0F1FBA88F200BD7251 /* Task.swift */; };
 		592FCF121FBA88FF00BD7251 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 592FCF111FBA88FF00BD7251 /* User.swift */; };
 		592FCF171FBA8BDA00BD7251 /* Place.swift in Sources */ = {isa = PBXBuildFile; fileRef = 592FCF161FBA8BDA00BD7251 /* Place.swift */; };
 		592FCF191FBB4A8A00BD7251 /* tabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 592FCF181FBB4A8A00BD7251 /* tabBarController.swift */; };
 		592FCF1B1FBB4B3C00BD7251 /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = 592FCF1A1FBB4B3C00BD7251 /* Config.swift */; };
-		592FCF1D1FBB4D2900BD7251 /* CommManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 592FCF1C1FBB4D2900BD7251 /* CommManager.swift */; };
 		592FCF1F1FBB4F6B00BD7251 /* loginVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 592FCF1E1FBB4F6B00BD7251 /* loginVC.swift */; };
+		593B9790205615C8008AE587 /* Pretracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 593B978D205615C8008AE587 /* Pretracker.swift */; };
+		593B9791205615C8008AE587 /* CommManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 593B978E205615C8008AE587 /* CommManager.swift */; };
+		593B9792205615C8008AE587 /* NotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 593B978F205615C8008AE587 /* NotificationManager.swift */; };
+		593B97942056162F008AE587 /* EstimoteSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 593B97932056162F008AE587 /* EstimoteSDK.framework */; };
+		593B979620561660008AE587 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 593B979520561660008AE587 /* Icon.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -47,8 +48,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		592250E920548CAD007286A2 /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Icon.png; path = ../../../../LiberoV2/Libero/Icon.png; sourceTree = "<group>"; };
-		592250EB2054C96E007286A2 /* Pretracker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Pretracker.swift; path = otgSM/Pretracker.swift; sourceTree = SOURCE_ROOT; };
 		592250ED2054CCAC007286A2 /* otgSM.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = otgSM.entitlements; sourceTree = "<group>"; };
 		592250EE2054CD0D007286A2 /* noyes.gpx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = noyes.gpx; sourceTree = "<group>"; };
 		592FCED61FBA881900BD7251 /* otgSM.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = otgSM.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -66,14 +65,18 @@
 		592FCEFB1FBA881A00BD7251 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		592FCF081FBA885C00BD7251 /* requestVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = requestVC.swift; sourceTree = "<group>"; };
 		592FCF0A1FBA886B00BD7251 /* progressVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = progressVC.swift; sourceTree = "<group>"; };
-		592FCF0C1FBA888000BD7251 /* NotificationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationManager.swift; sourceTree = "<group>"; };
 		592FCF0F1FBA88F200BD7251 /* Task.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Task.swift; sourceTree = "<group>"; };
 		592FCF111FBA88FF00BD7251 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		592FCF161FBA8BDA00BD7251 /* Place.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Place.swift; sourceTree = "<group>"; };
 		592FCF181FBB4A8A00BD7251 /* tabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = tabBarController.swift; path = otgSM/ViewControllers/tabBarController.swift; sourceTree = SOURCE_ROOT; };
 		592FCF1A1FBB4B3C00BD7251 /* Config.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Config.swift; sourceTree = "<group>"; };
-		592FCF1C1FBB4D2900BD7251 /* CommManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommManager.swift; sourceTree = "<group>"; };
-		592FCF1E1FBB4F6B00BD7251 /* loginVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = loginVC.swift; path = ViewControllers/loginVC.swift; sourceTree = "<group>"; };
+		592FCF1E1FBB4F6B00BD7251 /* loginVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = loginVC.swift; sourceTree = "<group>"; };
+		593B978C205615C0008AE587 /* ObjCBridge.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ObjCBridge.h; sourceTree = "<group>"; };
+		593B978D205615C8008AE587 /* Pretracker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Pretracker.swift; path = otgSM/Managers/Pretracker.swift; sourceTree = SOURCE_ROOT; };
+		593B978E205615C8008AE587 /* CommManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CommManager.swift; path = otgSM/Managers/CommManager.swift; sourceTree = SOURCE_ROOT; };
+		593B978F205615C8008AE587 /* NotificationManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NotificationManager.swift; path = otgSM/Managers/NotificationManager.swift; sourceTree = SOURCE_ROOT; };
+		593B97932056162F008AE587 /* EstimoteSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = EstimoteSDK.framework; sourceTree = "<group>"; };
+		593B979520561660008AE587 /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -81,6 +84,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				593B97942056162F008AE587 /* EstimoteSDK.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -124,14 +128,13 @@
 		592FCED81FBA881900BD7251 /* otgSM */ = {
 			isa = PBXGroup;
 			children = (
+				593B97932056162F008AE587 /* EstimoteSDK.framework */,
 				592250ED2054CCAC007286A2 /* otgSM.entitlements */,
 				592FCF1A1FBB4B3C00BD7251 /* Config.swift */,
-				592FCF1C1FBB4D2900BD7251 /* CommManager.swift */,
-				592FCF0C1FBA888000BD7251 /* NotificationManager.swift */,
 				592FCED91FBA881A00BD7251 /* AppDelegate.swift */,
-				592FCF1E1FBB4F6B00BD7251 /* loginVC.swift */,
+				593B978C205615C0008AE587 /* ObjCBridge.h */,
 				592FCEE51FBA881A00BD7251 /* Info.plist */,
-				592250EB2054C96E007286A2 /* Pretracker.swift */,
+				593B978B205615AD008AE587 /* Managers */,
 				592FCF0E1FBA88D600BD7251 /* ViewControllers */,
 				592FCF151FBA897500BD7251 /* Models */,
 				592FCF071FBA883D00BD7251 /* Misc */,
@@ -162,7 +165,7 @@
 			children = (
 				592250EE2054CD0D007286A2 /* noyes.gpx */,
 				592FCEDD1FBA881A00BD7251 /* Main.storyboard */,
-				592250E920548CAD007286A2 /* Icon.png */,
+				593B979520561660008AE587 /* Icon.png */,
 				592FCEE01FBA881A00BD7251 /* Assets.xcassets */,
 				592FCEE21FBA881A00BD7251 /* LaunchScreen.storyboard */,
 			);
@@ -172,6 +175,7 @@
 		592FCF0E1FBA88D600BD7251 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
+				592FCF1E1FBB4F6B00BD7251 /* loginVC.swift */,
 				592FCF181FBB4A8A00BD7251 /* tabBarController.swift */,
 				592FCEDB1FBA881A00BD7251 /* ViewController.swift */,
 				592FCF081FBA885C00BD7251 /* requestVC.swift */,
@@ -188,6 +192,17 @@
 				592FCF111FBA88FF00BD7251 /* User.swift */,
 			);
 			path = Models;
+			sourceTree = "<group>";
+		};
+		593B978B205615AD008AE587 /* Managers */ = {
+			isa = PBXGroup;
+			children = (
+				593B978E205615C8008AE587 /* CommManager.swift */,
+				593B978F205615C8008AE587 /* NotificationManager.swift */,
+				593B978D205615C8008AE587 /* Pretracker.swift */,
+			);
+			name = Managers;
+			path = "New Group";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -305,8 +320,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				593B979620561660008AE587 /* Icon.png in Resources */,
 				592250EF2054CD0D007286A2 /* noyes.gpx in Resources */,
-				592250EA20548CAD007286A2 /* Icon.png in Resources */,
 				592FCEE41FBA881A00BD7251 /* LaunchScreen.storyboard in Resources */,
 				592FCEE11FBA881A00BD7251 /* Assets.xcassets in Resources */,
 				592FCEDF1FBA881A00BD7251 /* Main.storyboard in Resources */,
@@ -336,16 +351,16 @@
 			files = (
 				592FCF091FBA885C00BD7251 /* requestVC.swift in Sources */,
 				592FCF0B1FBA886B00BD7251 /* progressVC.swift in Sources */,
-				592FCF0D1FBA888000BD7251 /* NotificationManager.swift in Sources */,
 				592FCEDC1FBA881A00BD7251 /* ViewController.swift in Sources */,
-				592FCF1D1FBB4D2900BD7251 /* CommManager.swift in Sources */,
 				592FCF101FBA88F200BD7251 /* Task.swift in Sources */,
 				592FCF171FBA8BDA00BD7251 /* Place.swift in Sources */,
 				592FCF191FBB4A8A00BD7251 /* tabBarController.swift in Sources */,
+				593B9792205615C8008AE587 /* NotificationManager.swift in Sources */,
+				593B9790205615C8008AE587 /* Pretracker.swift in Sources */,
 				592FCF1B1FBB4B3C00BD7251 /* Config.swift in Sources */,
-				592250EC2054C96E007286A2 /* Pretracker.swift in Sources */,
 				592FCEDA1FBA881A00BD7251 /* AppDelegate.swift in Sources */,
 				592FCF1F1FBB4F6B00BD7251 /* loginVC.swift in Sources */,
+				593B9791205615C8008AE587 /* CommManager.swift in Sources */,
 				592FCF121FBA88FF00BD7251 /* User.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -516,12 +531,17 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = W4E2C6X642;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/otgSM",
+				);
 				INFOPLIST_FILE = otgSM/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = edu.northwestern.delta.otgDev;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "${PROJECT_NAME}/ObjCBridge.h";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
@@ -535,12 +555,17 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = W4E2C6X642;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/otgSM",
+				);
 				INFOPLIST_FILE = otgSM/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = edu.northwestern.delta.otgDev;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "${PROJECT_NAME}/ObjCBridge.h";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};

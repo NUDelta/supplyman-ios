@@ -68,7 +68,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         }
         
         Pretracker.sharedManager.locationManager!.startUpdatingLocation()
-        
+
         return true
     }
     
@@ -92,6 +92,27 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     
     // Handle data received from push.
     func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable : Any], fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
+        
+        for monitoredRegion in (Pretracker.sharedManager.locationManager?.monitoredRegions)! {
+            print(monitoredRegion)
+        }
+        
+        if (userInfo.index(forKey: "regionType") != nil) {
+            let regionType = userInfo["regionType"] as! String
+            
+            if (regionType == "beacon") {
+                Pretracker.sharedManager.addBeaconRegion(userInfo)
+            }
+            
+            if (regionType == "geofence") {
+                Pretracker.sharedManager.addRegion(userInfo)
+            }
+        }
+        
+        if (userInfo.index(forKey: "removeAllRegions") != nil) {
+            Pretracker.sharedManager.removeAllRegions()
+        }
+        
         if (userInfo.index(forKey: "inRegion") != nil) {
             print("it is here")
             print(userInfo["inRegion"]!)
