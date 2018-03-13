@@ -16,7 +16,28 @@ class NotificationManager: NSObject {
         super.init()
     }
     
-    func handleSilentPushNotification() {
-        
+    func handlePeriodicSilentPush() {
+        Pretracker.sharedManager.locationManager?.requestLocation()
+        if let currentLocation = Pretracker.sharedManager.currentLocation {
+            let lat = currentLocation.coordinate.latitude
+            let lon = currentLocation.coordinate.longitude
+            let speed = currentLocation.speed
+            let date = Date().timeIntervalSince1970
+            let accuracy = currentLocation.horizontalAccuracy
+            if let user = CURRENT_USER?.username {
+                let params = ["user": user, "lat": lat, "lon": lon, "date":date, "accuracy":accuracy, "speed":speed] as [String : Any]
+                CommManager.instance.urlRequest(route: "currentLocation", parameters: params, completion: {
+                    json in
+                    // need to add this for handling background fetch.
+                })
+            } else {
+                let params = ["user": "", "lat": lat, "lon": lon, "date":date, "accuracy":accuracy, "speed":speed] as [String : Any]
+                CommManager.instance.urlRequest(route: "currentLocation", parameters: params, completion: {
+                    json in
+                    // need to add this for handling background fetch.
+                })
+            }
+            
+        }
     }
 }

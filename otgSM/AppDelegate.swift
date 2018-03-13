@@ -56,7 +56,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
             let tabbarVC = storyboard.instantiateViewController(withIdentifier: "tabbarVC")
             self.window?.makeKeyAndVisible()
             self.window?.rootViewController?.present(tabbarVC, animated: true, completion: nil)
-//            CURRENT_USER = User(username: defaults.value(forKey: "username") as! String, tokenId: defaults.value(forKey: "tokenId") as! String)
+            CURRENT_USER = User(username: defaults.value(forKey: "username") as! String, tokenId: defaults.value(forKey: "tokenId") as! String)
             
         // otherwise, instantiate with login view controller.
         } else {
@@ -64,11 +64,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
             let tabbarVC = storyboard.instantiateViewController(withIdentifier: "loginVC")
             self.window?.makeKeyAndVisible()
             self.window?.rootViewController?.present(tabbarVC, animated: true, completion: nil)
-            CURRENT_USER = User(username: defaults.value(forKey: "username") as! String, tokenId: defaults.value(forKey: "tokenId") as! String)
         }
         
-        Pretracker.sharedManager.locationManager!.startUpdatingLocation()
-
         return true
     }
     
@@ -97,6 +94,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
             print(monitoredRegion)
         }
         
+        // Adding beacon region or geofence based on region type.
         if (userInfo.index(forKey: "regionType") != nil) {
             let regionType = userInfo["regionType"] as! String
             
@@ -109,12 +107,21 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
             }
         }
         
+        // remove all the regions.
         if (userInfo.index(forKey: "removeAllRegions") != nil) {
             Pretracker.sharedManager.removeAllRegions()
         }
         
+        // Handling silent push for location updates.
+        if (userInfo.index(forKey: "locationUpdate") != nil) {
+            NotificationManager.sharedManager.handlePeriodicSilentPush()
+        }
+        
+        // Some pretracking logic here:
+        // IF a user enters a geofence, start updating location.
+        // IF a user exits a geofence, start monitoring significant location changes.
+        
         if (userInfo.index(forKey: "inRegion") != nil) {
-            print("it is here")
             print(userInfo["inRegion"]!)
             let inRegion = userInfo["inRegion"] as! Int
             if(inRegion==1){
@@ -131,6 +138,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
                 print(Pretracker.sharedManager.locationManager?.distanceFilter)
             }
         }
+        completionHandler(UIBackgroundFetchResult.noData)
     }
 
     func applicationWillResignActive(_ application: UIApplication) {

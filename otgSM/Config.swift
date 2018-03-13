@@ -9,7 +9,7 @@
 import UIKit
 
 struct Config {
-    static let DEBUG = false
+    static let DEBUG = true
     static var URL = ""
     public static let sharedConfig = Config()
     

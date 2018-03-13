@@ -21,6 +21,7 @@ class requestVC: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource,
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        Pretracker.sharedManager.locationManager!.startUpdatingLocation()
         self.placePicker.delegate  = self
         self.placePicker.dataSource = self
         place = pickerData[0]
