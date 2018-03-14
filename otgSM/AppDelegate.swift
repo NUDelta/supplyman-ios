@@ -126,13 +126,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
             let inRegion = userInfo["inRegion"] as! Int
             if(inRegion==1){
                 Pretracker.sharedManager.locationManager?.startUpdatingLocation()
+                Pretracker.sharedManager.locationManager!.distanceFilter = CLLocationDistance(10)
                 print(Pretracker.sharedManager.locationManager?.desiredAccuracy)
                 print(Pretracker.sharedManager.locationManager?.distanceFilter)
             } else {
                 Pretracker.sharedManager.activeRegions()
                 Pretracker.sharedManager.locationManager!.stopUpdatingLocation()
                 Pretracker.sharedManager.locationManager!.startMonitoringSignificantLocationChanges()
-                Pretracker.sharedManager.locationManager!.distanceFilter = CLLocationDistance(80)
+//                Pretracker.sharedManager.locationManager!.distanceFilter = CLLocationDistance(80)
 
                 print(Pretracker.sharedManager.locationManager?.desiredAccuracy)
                 print(Pretracker.sharedManager.locationManager?.distanceFilter)
