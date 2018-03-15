@@ -19,8 +19,15 @@ class loginVC: UIViewController {
         
         uuid = uuid.replacingOccurrences(of: "-", with: "")
 
-        
+        fillUserNameWithUUID()
         // Do any additional setup after loading the view.
+    }
+    
+    func fillUserNameWithUUID() {
+        // pre-fill username with randomly uuid
+        
+        uuid = uuid.replacingOccurrences(of: "-", with: "")
+        usernameTextField.text = uuid
     }
 
     override func didReceiveMemoryWarning() {

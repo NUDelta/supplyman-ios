@@ -31,6 +31,10 @@ class Pretracker: NSObject, CLLocationManagerDelegate, UNUserNotificationCenterD
     
     let defaults = UserDefaults.standard
     
+    let taskLocationLat = 42.058334
+    let taskLocationLon = -87.683653
+    let notificationRadius = 350.0
+    
     public static let sharedManager = Pretracker()
     
     override init() {
@@ -72,8 +76,8 @@ class Pretracker: NSObject, CLLocationManagerDelegate, UNUserNotificationCenterD
         //        locationManager.startUpdatingLocation()
         
         // geofence for coffee lab.
-        let center = CLLocationCoordinate2D(latitude: 42.05836465275161, longitude: -87.68329261594984)
-        let taskRegion = CLCircularRegion(center: center, radius: 500, identifier: "coffee lab")
+        let center = CLLocationCoordinate2D(latitude: taskLocationLat, longitude: taskLocationLon)
+        let taskRegion = CLCircularRegion(center: center, radius: notificationRadius, identifier: "coffee lab")
         
         // Beacon region for cofffee lab.
         let beaconRegion = CLBeaconRegion(proximityUUID: UUID(uuidString:"B9407F30-F5F8-466E-AFF9-25556B57FE6D")!, major: 8708, minor: 27238, identifier: "coffeeLab")
@@ -184,18 +188,36 @@ class Pretracker: NSObject, CLLocationManagerDelegate, UNUserNotificationCenterD
     // MARK: beacon manager delegate methods
     
     func beaconManager(_ manager: Any, didEnter region: CLBeaconRegion) {
-        print(region)
-        let notification = UILocalNotification()
-        notification.alertBody =
-            "Your gate closes in 47 minutes. " +
-            "Current security wait time is 15 minutes, " +
-            "and it's a 5 minute walk from security to the gate. " +
-        "Looks like you've got plenty of time!"
-        UIApplication.shared.presentLocalNotificationNow(notification)
+//        print(region)
+        
+        // TODO: gotta move all the notification logic to the backend
+        
+        let date = Date().timeIntervalSince1970
+
+        let params = ["user": (CURRENT_USER?.username)! ?? "", "date":date, "didEnterRegion": true, "region": region.identifier] as [String : Any]
+        CommManager.instance.urlRequest(route: "beaconRegion", parameters: params, completion: {
+            json in
+            print(json)
+//            print(json["description"])
+//            let notification = UILocalNotification()
+//            notification.alertBody =
+//            "Beacon Notification!"
+//            UIApplication.shared.presentLocalNotificationNow(notification)
+//            NotificationManager.sharedManager.handleTaskNotification()
+            // need to add this for handling background fetch.
+        })
+        print("didEnter")
     }
     
     func beaconManager(_ manager: Any, didExitRegion region: CLBeaconRegion) {
-        print(region)
+        let date = Date().timeIntervalSince1970
+
+        let params = ["user": (CURRENT_USER?.username)! ?? "", "date":date, "didEnterRegion": false, "region": region.identifier] as [String : Any]
+            CommManager.instance.urlRequest(route: "beaconRegion", parameters: params, completion: {
+            json in
+            print(json)
+            // need to add this for handling background fetch.
+            })
     }
     
     func beaconManager(_ manager: Any, didFailWithError error: Error) {

@@ -18,6 +18,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     // user defauls to store tokenId.
     let defaults = UserDefaults.standard
     
+    let center = NotificationCenter.default
+    
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         _  = Config()
@@ -79,6 +81,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         let deviceTokenString = deviceToken.reduce("", {$0 + String(format: "%02X", $1)})
         print(deviceTokenString)
         defaults.set(deviceTokenString, forKey: "tokenId")
+        
+        // also set lastNotified to 0
+        defaults.set(0, forKey: "lastNotified")
     }
     
     func application(_ application: UIApplication,
@@ -92,6 +97,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         
         for monitoredRegion in (Pretracker.sharedManager.locationManager?.monitoredRegions)! {
             print(monitoredRegion)
+        }
+        
+        // store last task notification time to show task details and button.
+        if (userInfo.index(forKey: "taskNotification") != nil) {
+            if(userInfo.index(forKey: "decisionActivityId") != nil) {
+                let decisionActivityId = userInfo["decisionActivityId"] as! String
+                NotificationManager.sharedManager.handleTaskNotification(decisionActivityId)
+            }
+            
         }
         
         // Adding beacon region or geofence based on region type.
@@ -153,11 +167,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     }
 
     func applicationWillEnterForeground(_ application: UIApplication) {
+        
+        // Update the task fields whenever a user re-enters the app.
+        self.center.post(name: NSNotification.Name(rawValue: "updateDetail"), object: nil, userInfo: nil)
         // Called as part of the transition from the background to the active state; here you can undo many of the changes made on entering the background.
     }
 
     func applicationDidBecomeActive(_ application: UIApplication) {
         // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
+        UIApplication.shared.applicationIconBadgeNumber = 0
     }
 
     func applicationWillTerminate(_ application: UIApplication) {

@@ -7,13 +7,26 @@
 //
 
 import UIKit
+import Foundation
 
 class NotificationManager: NSObject {
     
     public static let sharedManager = NotificationManager()
-    
+    let defaults = UserDefaults.standard
+    let center = NotificationCenter.default
+
     override init() {
         super.init()
+    }
+    
+    func handleTaskNotification(_ decisionActivityId: String) {
+        print(defaults.value(forKey:"lastNotified"))
+        let date = Date().timeIntervalSince1970
+        defaults.set(date, forKey: "lastNotified")
+        defaults.set(decisionActivityId, forKey:"decisionActivityId")
+        
+        // get task details when gets a notification.
+        self.center.post(name: NSNotification.Name(rawValue: "getTaskNotification"), object: nil, userInfo: nil)
     }
     
     func handlePeriodicSilentPush() {

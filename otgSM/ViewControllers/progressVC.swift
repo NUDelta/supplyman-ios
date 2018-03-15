@@ -12,6 +12,10 @@ class progressVC: UIViewController {
 
     var currentTask: Task?
     let center = NotificationCenter.default
+    
+    let defaults = UserDefaults.standard
+    
+    let timeFilter = 60.0 * 3.0
 
     @IBOutlet weak var requesterField: UILabel!
     @IBOutlet weak var taskDescriptionField: UILabel!
@@ -19,15 +23,38 @@ class progressVC: UIViewController {
     @IBOutlet weak var pickUpLocationField: UILabel!
     @IBOutlet weak var dropOffLocationField: UILabel!
     
+    @IBOutlet weak var helpButton: UIButton!
+    
+    @IBOutlet weak var declineButton: UIButton!
+    
+    var decisionActivityId: String?
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        getTask()
-        Pretracker.sharedManager.locationManager!.startUpdatingLocation()
-
-        center.addObserver(forName: NSNotification.Name(rawValue: "updateDetail"), object: nil, queue: OperationQueue.main, using: updateFields)
         
-        // Do any additional setup after loading the view.
+        Pretracker.sharedManager.locationManager!.startUpdatingLocation()
+        
+        // add observer for task notification.
+        center.addObserver(forName: NSNotification.Name(rawValue: "getTaskNotification"), object: nil, queue: OperationQueue.main, using: getTaskNotification)
+
+        // add observer for updating the fields.
+        center.addObserver(forName: NSNotification.Name(rawValue: "updateDetail"), object: nil, queue: OperationQueue.main, using: updateFields)
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        let showTask = didReceiveTaskNotification()
+        if (showTask) {
+            getTask()
+            helpButton.isHidden = false
+            declineButton.isHidden = false
+        } else {
+            helpButton.isHidden = true
+            declineButton.isHidden = true
+            requesterField.text = "No request yet"
+            taskDescriptionField.text = "No request yet"
+            pickUpLocationField.text = "No request yet"
+            dropOffLocationField.text = "No request yet"
+        }
     }
 
     override func didReceiveMemoryWarning() {
@@ -35,8 +62,21 @@ class progressVC: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
+    func didReceiveTaskNotification()->Bool{
+        print(defaults.value(forKey: "lastNotified"))
+        let currentTime = Date().timeIntervalSince1970 as Double
+        let lastNotified = defaults.value(forKey: "lastNotified") as! Double
+        let timeElapsed = currentTime - lastNotified
+        print(timeElapsed)
+        if(timeElapsed <= timeFilter) {
+            return true
+        } else {
+            return false
+        }
+    }
+    
     func getTask() {
-        // If received a notification.
+        // such a hacky way send get request when there is no parameter needed...
         CommManager.instance.getRequest(route: "getTask", parameters:["foo":"bar"]) {
             json in
             print (json)
@@ -60,57 +100,46 @@ class progressVC: UIViewController {
             
             self.currentTask = Task(requester: requester as! String, taskLocation: taskLocation as! String, dropOffLocation: dropOffLocation as! String, taskDescription: taskDescription as! String, requestTime: requestTime as! Int, deadline: deadline as! Int, taskId: taskId as! String)
             self.center.post(name: NSNotification.Name(rawValue: "updateDetail"), object: nil, userInfo: nil)
-            
-//            self.updateFields()
-            // if there is no nearby search region with the item not found yet, server returns {"result":0}
-//            if json.index(forKey: "found") != nil {
-//                let loc = json["loc"] as! [String:Any]
-//                let coord = loc["coordinates"] as! [Double]
-//                let id = json["_id"] as! [String:Any]
-//                if regionId == id["$oid"] as! String {
-//
-//                    //TODO: check if current location is within distance threshold.
-//                    self.searchRegion = LostItemRegion(requesterName: json["user"] as! String, item: json["item"] as! String, itemDetail: json["detail"] as! String, lat: coord[1], lon: coord[0], id: id["$oid"] as! String)
-//                    self.center.post(name: NSNotification.Name(rawValue: "updatedDetail"), object: nil, userInfo:nil)
-//                }
-//            }
         }
+    }
+    
+    func getTaskNotification(notification: Notification) -> Void {
+        getTask()
     }
     
     func updateFields(notification: Notification) -> Void{
 //        DispatchQueue.main.async(){
-        if let task = currentTask {
-            requesterField.text = task.requester
-            taskDescriptionField.text = task.taskDescription
-            pickUpLocationField.text = task.taskLocation
-            dropOffLocationField.text = task.dropOffLocation
+
+        let showTask = didReceiveTaskNotification()
+        if (showTask) {
+            if let task = currentTask {
+                decisionActivityId = defaults.value(forKey: "decisionActivityId") as? String ?? ""
+
+                requesterField.text = task.requester
+                taskDescriptionField.text = task.taskDescription
+                pickUpLocationField.text = task.taskLocation
+                dropOffLocationField.text = task.dropOffLocation
+                helpButton.isHidden = false
+                declineButton.isHidden = false
+            }
+        } else {
+            helpButton.isHidden = true
+            declineButton.isHidden = true
+            requesterField.text = "No request yet"
+            taskDescriptionField.text = "No request yet"
+            pickUpLocationField.text = "No request yet"
+            dropOffLocationField.text = "No request yet"
         }
-        
 //        }
-        
     }
 
     @IBAction func clickAcceptButton(_ sender: UIButton) {
         showPopUp()
     }
     
-    func didHelp() {
-//        let param = ["user":(CURRENT_USER?.username)!,"lat":String(describing: (Pretracker.sharedManager.currentLocation?.coordinate.latitude)!) ?? 0.0,"lon":String(describing: (Pretracker.sharedManager.currentLocation?.coordinate.longitude)!) ?? 0.0,"region_id":regionId,"decision_activity_id": defaults.value(forKey: "decision_activity_id") ?? "", "search_road": defaults.value(forKey: "search_road") ?? "", "timestamp":Date().timeIntervalSince1970] as [String : Any]
-        
-        
-        // need help activity id.
-//        CommManager.instance.urlRequest(route: "startHelping", parameters: param, completion: {
-//            json in
-//            print("thanks")
-//        })
-//        switchToNextTab()
-    }
-    
     @IBAction func clickDeclineButton(_ sender: Any) {
         didDecline()
-        
-        // go to another tab.
-//        switchToNextTab()
+        switchToNextTab()
     }
     
     func switchToNextTab() {
@@ -143,8 +172,26 @@ class progressVC: UIViewController {
         self.present(alert, animated: true, completion: nil)
     }
     
+    func didHelp() {
+        decisionActivityId = defaults.value(forKey: "decisionActivityId") as! String ?? ""
+
+        let param = ["user":(CURRENT_USER?.username)! ?? "", "taskId": currentTask?.taskId, "didHelp": true, "date":Date().timeIntervalSince1970, "decisionActivityId": decisionActivityId] as [String : Any]
+        
+        CommManager.instance.urlRequest(route: "helpActivity", parameters: param, completion: {
+            json in
+            print("thanks")
+        })
+        switchToNextTab()
+    }
+    
     func didDecline() {
         print("did decline")
+        let param = ["user":(CURRENT_USER?.username)! ?? "", "taskId": currentTask?.taskId, "didHelp": false, "date":Date().timeIntervalSince1970, "decisionActivityId": decisionActivityId] as [String : Any]
+        
+        CommManager.instance.urlRequest(route: "helpActivity", parameters: param, completion: {
+            json in
+            print("thanks")
+        })
     }
     
     /*

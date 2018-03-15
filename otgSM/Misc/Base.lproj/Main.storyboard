@@ -153,7 +153,9 @@
                     </view>
                     <tabBarItem key="tabBarItem" title="Task" image="package.png" id="l6u-Hw-bWe"/>
                     <connections>
+                        <outlet property="declineButton" destination="Ipd-Vb-O9v" id="FtY-31-08K"/>
                         <outlet property="dropOffLocationField" destination="khs-QN-YFJ" id="xYV-Rg-KWE"/>
+                        <outlet property="helpButton" destination="52w-Va-CRY" id="BTS-20-MgR"/>
                         <outlet property="pickUpLocationField" destination="40V-rl-19V" id="cgk-5C-aIR"/>
                         <outlet property="requesterField" destination="mtA-wD-yEH" id="lUE-Rr-GjJ"/>
                         <outlet property="taskDescriptionField" destination="YOE-7L-60g" id="NIj-T3-gtx"/>

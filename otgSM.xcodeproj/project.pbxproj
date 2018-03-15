@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		592250EF2054CD0D007286A2 /* noyes.gpx in Resources */ = {isa = PBXBuildFile; fileRef = 592250EE2054CD0D007286A2 /* noyes.gpx */; };
+		5926B71120597E510067603B /* NotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5926B70E20597E510067603B /* NotificationManager.swift */; };
+		5926B71220597E510067603B /* Pretracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5926B70F20597E510067603B /* Pretracker.swift */; };
+		5926B71320597E510067603B /* CommManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5926B71020597E510067603B /* CommManager.swift */; };
 		592FCEDA1FBA881A00BD7251 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 592FCED91FBA881A00BD7251 /* AppDelegate.swift */; };
 		592FCEDC1FBA881A00BD7251 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 592FCEDB1FBA881A00BD7251 /* ViewController.swift */; };
 		592FCEDF1FBA881A00BD7251 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 592FCEDD1FBA881A00BD7251 /* Main.storyboard */; };
@@ -23,9 +26,6 @@
 		592FCF191FBB4A8A00BD7251 /* tabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 592FCF181FBB4A8A00BD7251 /* tabBarController.swift */; };
 		592FCF1B1FBB4B3C00BD7251 /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = 592FCF1A1FBB4B3C00BD7251 /* Config.swift */; };
 		592FCF1F1FBB4F6B00BD7251 /* loginVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 592FCF1E1FBB4F6B00BD7251 /* loginVC.swift */; };
-		593B9790205615C8008AE587 /* Pretracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 593B978D205615C8008AE587 /* Pretracker.swift */; };
-		593B9791205615C8008AE587 /* CommManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 593B978E205615C8008AE587 /* CommManager.swift */; };
-		593B9792205615C8008AE587 /* NotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 593B978F205615C8008AE587 /* NotificationManager.swift */; };
 		593B97942056162F008AE587 /* EstimoteSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 593B97932056162F008AE587 /* EstimoteSDK.framework */; };
 		593B979620561660008AE587 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 593B979520561660008AE587 /* Icon.png */; };
 		593B9798205876A7008AE587 /* profile.png in Resources */ = {isa = PBXBuildFile; fileRef = 593B9797205876A7008AE587 /* profile.png */; };
@@ -53,6 +53,9 @@
 /* Begin PBXFileReference section */
 		592250ED2054CCAC007286A2 /* otgSM.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = otgSM.entitlements; sourceTree = "<group>"; };
 		592250EE2054CD0D007286A2 /* noyes.gpx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = noyes.gpx; sourceTree = "<group>"; };
+		5926B70E20597E510067603B /* NotificationManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationManager.swift; sourceTree = "<group>"; };
+		5926B70F20597E510067603B /* Pretracker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Pretracker.swift; sourceTree = "<group>"; };
+		5926B71020597E510067603B /* CommManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommManager.swift; sourceTree = "<group>"; };
 		592FCED61FBA881900BD7251 /* otgSM.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = otgSM.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		592FCED91FBA881A00BD7251 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		592FCEDB1FBA881A00BD7251 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -75,9 +78,6 @@
 		592FCF1A1FBB4B3C00BD7251 /* Config.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Config.swift; sourceTree = "<group>"; };
 		592FCF1E1FBB4F6B00BD7251 /* loginVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = loginVC.swift; sourceTree = "<group>"; };
 		593B978C205615C0008AE587 /* ObjCBridge.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ObjCBridge.h; sourceTree = "<group>"; };
-		593B978D205615C8008AE587 /* Pretracker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Pretracker.swift; path = otgSM/Managers/Pretracker.swift; sourceTree = SOURCE_ROOT; };
-		593B978E205615C8008AE587 /* CommManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CommManager.swift; path = otgSM/Managers/CommManager.swift; sourceTree = SOURCE_ROOT; };
-		593B978F205615C8008AE587 /* NotificationManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NotificationManager.swift; path = otgSM/Managers/NotificationManager.swift; sourceTree = SOURCE_ROOT; };
 		593B97932056162F008AE587 /* EstimoteSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = EstimoteSDK.framework; sourceTree = "<group>"; };
 		593B979520561660008AE587 /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
 		593B9797205876A7008AE587 /* profile.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = profile.png; sourceTree = "<group>"; };
@@ -111,6 +111,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		5926B70D20597E510067603B /* Managers */ = {
+			isa = PBXGroup;
+			children = (
+				5926B70E20597E510067603B /* NotificationManager.swift */,
+				5926B70F20597E510067603B /* Pretracker.swift */,
+				5926B71020597E510067603B /* CommManager.swift */,
+			);
+			path = Managers;
+			sourceTree = "<group>";
+		};
 		592FCECD1FBA881900BD7251 = {
 			isa = PBXGroup;
 			children = (
@@ -140,7 +150,7 @@
 				592FCED91FBA881A00BD7251 /* AppDelegate.swift */,
 				593B978C205615C0008AE587 /* ObjCBridge.h */,
 				592FCEE51FBA881A00BD7251 /* Info.plist */,
-				593B978B205615AD008AE587 /* Managers */,
+				5926B70D20597E510067603B /* Managers */,
 				592FCF0E1FBA88D600BD7251 /* ViewControllers */,
 				592FCF151FBA897500BD7251 /* Models */,
 				592FCF071FBA883D00BD7251 /* Misc */,
@@ -201,17 +211,6 @@
 				592FCF111FBA88FF00BD7251 /* User.swift */,
 			);
 			path = Models;
-			sourceTree = "<group>";
-		};
-		593B978B205615AD008AE587 /* Managers */ = {
-			isa = PBXGroup;
-			children = (
-				593B978E205615C8008AE587 /* CommManager.swift */,
-				593B978F205615C8008AE587 /* NotificationManager.swift */,
-				593B978D205615C8008AE587 /* Pretracker.swift */,
-			);
-			name = Managers;
-			path = "New Group";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -365,14 +364,14 @@
 				592FCEDC1FBA881A00BD7251 /* ViewController.swift in Sources */,
 				592FCF101FBA88F200BD7251 /* Task.swift in Sources */,
 				592FCF171FBA8BDA00BD7251 /* Place.swift in Sources */,
+				5926B71320597E510067603B /* CommManager.swift in Sources */,
 				592FCF191FBB4A8A00BD7251 /* tabBarController.swift in Sources */,
-				593B9792205615C8008AE587 /* NotificationManager.swift in Sources */,
-				593B9790205615C8008AE587 /* Pretracker.swift in Sources */,
 				592FCF1B1FBB4B3C00BD7251 /* Config.swift in Sources */,
 				592FCEDA1FBA881A00BD7251 /* AppDelegate.swift in Sources */,
 				593B979C20588509008AE587 /* profileVC.swift in Sources */,
 				592FCF1F1FBB4F6B00BD7251 /* loginVC.swift in Sources */,
-				593B9791205615C8008AE587 /* CommManager.swift in Sources */,
+				5926B71120597E510067603B /* NotificationManager.swift in Sources */,
+				5926B71220597E510067603B /* Pretracker.swift in Sources */,
 				592FCF121FBA88FF00BD7251 /* User.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
