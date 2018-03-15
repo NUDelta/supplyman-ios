@@ -61,12 +61,12 @@ class loginVC: UIViewController {
                 if data != nil {
                     do {
                         if let json = try JSONSerialization.jsonObject(with: data!, options: .allowFragments) as? [String: Any] {
-                            print(json)
+//                            print(json)
                             if json["result"] as! String == "success" {
-                                print("success")
+//                                print("success")
                                 self.pushSegue(username,tokenId)
                             } else if json["result"] as! String == "failed" {
-                                print("failed")
+//                                print("failed")
                                 self.failAlert(username)
                             }
                         }

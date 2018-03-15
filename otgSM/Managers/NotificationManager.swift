@@ -20,7 +20,7 @@ class NotificationManager: NSObject {
     }
     
     func handleTaskNotification(_ decisionActivityId: String) {
-        print(defaults.value(forKey:"lastNotified"))
+//        print(defaults.value(forKey:"lastNotified"))
         let date = Date().timeIntervalSince1970
         defaults.set(date, forKey: "lastNotified")
         defaults.set(decisionActivityId, forKey:"decisionActivityId")

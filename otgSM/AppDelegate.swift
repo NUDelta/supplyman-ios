@@ -79,7 +79,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
 
     func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
         let deviceTokenString = deviceToken.reduce("", {$0 + String(format: "%02X", $1)})
-        print(deviceTokenString)
+//        print(deviceTokenString)
         defaults.set(deviceTokenString, forKey: "tokenId")
         
         // also set lastNotified to 0
@@ -90,15 +90,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     func application(_ application: UIApplication,
                      didFailToRegisterForRemoteNotificationsWithError error: Error) {
         // The token is not currently available.
-        print("Remote notification support is unavailable due to error: \(error.localizedDescription)")
+//        print("Remote notification support is unavailable due to error: \(error.localizedDescription)")
     }
     
     // Handle data received from push.
     func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable : Any], fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
         
-        for monitoredRegion in (Pretracker.sharedManager.locationManager?.monitoredRegions)! {
-            print(monitoredRegion)
-        }
+//        for monitoredRegion in (Pretracker.sharedManager.locationManager?.monitoredRegions)! {
+//            print(monitoredRegion)
+//        }
         
         // store last task notification time to show task details and button.
         if (userInfo.index(forKey: "taskNotification") != nil) {
@@ -137,21 +137,27 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         // IF a user exits a geofence, start monitoring significant location changes.
         
         if (userInfo.index(forKey: "inRegion") != nil) {
-            print(userInfo["inRegion"]!)
+//            print(userInfo["inRegion"]!)
             let inRegion = userInfo["inRegion"] as! Int
             if(inRegion==1){
-                Pretracker.sharedManager.locationManager?.startUpdatingLocation()
+                Pretracker.sharedManager.locationManager!.stopMonitoringSignificantLocationChanges()
+                
                 Pretracker.sharedManager.locationManager!.distanceFilter = CLLocationDistance(10)
-                print(Pretracker.sharedManager.locationManager?.desiredAccuracy)
-                print(Pretracker.sharedManager.locationManager?.distanceFilter)
+                Pretracker.sharedManager.locationManager!.desiredAccuracy = kCLLocationAccuracyBestForNavigation
+                
+                Pretracker.sharedManager.locationManager?.startUpdatingLocation()
+
+//                print(Pretracker.sharedManager.locationManager?.desiredAccuracy)
+//                print(Pretracker.sharedManager.locationManager?.distanceFilter)
             } else {
                 Pretracker.sharedManager.activeRegions()
                 Pretracker.sharedManager.locationManager!.stopUpdatingLocation()
                 Pretracker.sharedManager.locationManager!.startMonitoringSignificantLocationChanges()
+                
 //                Pretracker.sharedManager.locationManager!.distanceFilter = CLLocationDistance(80)
 
-                print(Pretracker.sharedManager.locationManager?.desiredAccuracy)
-                print(Pretracker.sharedManager.locationManager?.distanceFilter)
+//                print(Pretracker.sharedManager.locationManager?.desiredAccuracy)
+//                print(Pretracker.sharedManager.locationManager?.distanceFilter)
             }
         }
         completionHandler(UIBackgroundFetchResult.noData)

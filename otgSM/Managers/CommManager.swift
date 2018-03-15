@@ -52,7 +52,7 @@ class CommManager: NSObject {
         request.setValue("application/json; charset=utf-8", forHTTPHeaderField: "Content-Type")
         
         let json = parameters!
-        print(json)
+//        print(json)
         
         do {
             let jsonData = try JSONSerialization.data(withJSONObject: json, options: .prettyPrinted)
@@ -66,7 +66,7 @@ class CommManager: NSObject {
                 if data != nil {
                     do {
                         if let json = try JSONSerialization.jsonObject(with: data!, options: .allowFragments) as? [String: Any] {
-                            print(json)
+//                            print(json)
                             completion(json)
                         }
                     } catch {

@@ -82,7 +82,11 @@ class Pretracker: NSObject, CLLocationManagerDelegate, UNUserNotificationCenterD
         // Beacon region for cofffee lab.
         let beaconRegion = CLBeaconRegion(proximityUUID: UUID(uuidString:"B9407F30-F5F8-466E-AFF9-25556B57FE6D")!, major: 8708, minor: 27238, identifier: "coffeeLab")
         
+        let innerCenter = CLLocationCoordinate2D(latitude: taskLocationLat, longitude: taskLocationLon)
+        let innerTaskRegion = CLCircularRegion(center: center, radius: 200, identifier: "coffee lab inner")
+        
         locationManager.startMonitoring(for: taskRegion)
+        locationManager.startMonitoring(for: innerTaskRegion)
 
         beaconManager.startMonitoring(for: beaconRegion)
         beaconRegion.notifyEntryStateOnDisplay = true
@@ -143,7 +147,7 @@ class Pretracker: NSObject, CLLocationManagerDelegate, UNUserNotificationCenterD
         }
         
         var locationDistance = currentLocation.distance(from: previousLocation!)
-        print(locationDistance)
+//        print(locationDistance)
         previousLocation = currentLocation
         return locationDistance
     }
@@ -206,7 +210,7 @@ class Pretracker: NSObject, CLLocationManagerDelegate, UNUserNotificationCenterD
 //            NotificationManager.sharedManager.handleTaskNotification()
             // need to add this for handling background fetch.
         })
-        print("didEnter")
+//        print("didEnter")
     }
     
     func beaconManager(_ manager: Any, didExitRegion region: CLBeaconRegion) {
@@ -215,7 +219,7 @@ class Pretracker: NSObject, CLLocationManagerDelegate, UNUserNotificationCenterD
         let params = ["user": (CURRENT_USER?.username)! ?? "", "date":date, "didEnterRegion": false, "region": region.identifier] as [String : Any]
             CommManager.instance.urlRequest(route: "beaconRegion", parameters: params, completion: {
             json in
-            print(json)
+//            print(json)
             // need to add this for handling background fetch.
             })
     }
@@ -239,7 +243,7 @@ class Pretracker: NSObject, CLLocationManagerDelegate, UNUserNotificationCenterD
     
     public func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         let lastLocation = locations.last!
-        print("speed is: \(lastLocation.speed)")
+//        print("speed is: \(lastLocation.speed)")
         
         //call CommManager POST method
         if checkLocationAccuracy(lastLocation) {
@@ -255,12 +259,12 @@ class Pretracker: NSObject, CLLocationManagerDelegate, UNUserNotificationCenterD
         let params = ["user": (CURRENT_USER?.username) ?? "", "lat": lat, "lon": lon, "date":date, "accuracy":accuracy, "speed":speed] as [String : Any]
         CommManager.instance.urlRequest(route: "currentLocation", parameters: params, completion: {
             json in
-            print(json)
+//            print(json)
             // need to add this for handling background fetch.
 //            completionHandler(UIBackgroundFetchResult.noData)
         })
         
-        print(lastLocation)
+//        print(lastLocation)
         
         // receive observers with LocationUpdate
         let nc = NotificationCenter.default
@@ -292,10 +296,10 @@ class Pretracker: NSObject, CLLocationManagerDelegate, UNUserNotificationCenterD
             let params = ["user": (CURRENT_USER?.username)! ?? "", "date":date, "isPretrack":true, "region":region.identifier, "lat":lat,"lon":lon] as [String : Any]
             CommManager.instance.urlRequest(route: "pretrackRegion", parameters: params, completion: {
                 json in
-                print(json)
+//                print(json)
                 // need to add this for handling background fetch.
             })
-            print("didEnter")
+//            print("didEnter")
         }
     }
     
@@ -308,15 +312,15 @@ class Pretracker: NSObject, CLLocationManagerDelegate, UNUserNotificationCenterD
             
             let params = ["user": (CURRENT_USER?.username)! , "date":date, "isPretrack":false, "region": region.identifier, "lat":lat,"lon":lon] as [String : Any]
             
-            print(params)
+//            print(params)
             
             CommManager.instance.urlRequest(route: "pretrackRegion", parameters: params, completion: {
                 json in
-                print(json)
+//                print(json)
                 // need to add this for handling background fetch.
             })
-            print(region)
-            print("didExit")
+//            print(region)
+//            print("didExit")
         }
     }
     

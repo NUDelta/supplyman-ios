@@ -42,7 +42,7 @@ class profileVC: UIViewController {
                 if data != nil {
                     do {
                         if let json = try JSONSerialization.jsonObject(with: data!, options: .allowFragments) as? [String: Any] {
-                            print(json)
+//                            print(json)
                             if let numHelp = json["numHelp"]{
                                 DispatchQueue.main.async {
                                     self.userNameLabel.text = (username as! String)

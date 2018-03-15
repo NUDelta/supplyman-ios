@@ -7,8 +7,9 @@
 //
 
 import UIKit
+import MessageUI
 
-class progressVC: UIViewController {
+class progressVC: UIViewController, MFMessageComposeViewControllerDelegate {
 
     var currentTask: Task?
     let center = NotificationCenter.default
@@ -32,15 +33,45 @@ class progressVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        Pretracker.sharedManager.locationManager!.startUpdatingLocation()
+//        Pretracker.sharedManager.locationManager!.startUpdatingLocation()
+        Pretracker.sharedManager.locationManager!.startMonitoringSignificantLocationChanges()
         
         // add observer for task notification.
         center.addObserver(forName: NSNotification.Name(rawValue: "getTaskNotification"), object: nil, queue: OperationQueue.main, using: getTaskNotification)
 
         // add observer for updating the fields.
         center.addObserver(forName: NSNotification.Name(rawValue: "updateDetail"), object: nil, queue: OperationQueue.main, using: updateFields)
+
     }
     
+    @IBAction func textButtonClicked(_ sender: Any) {
+//        UIApplication.shared.openURL(NSURL(string: "telprompt://8472190252") as! URL)
+
+        let messageVC = MFMessageComposeViewController()
+        
+        messageVC.body = "";
+        messageVC.recipients = ["8472190252"]
+        messageVC.messageComposeDelegate = self
+    
+        self.present(messageVC, animated: false, completion: nil)
+    }
+    
+    func messageComposeViewController(_ controller: MFMessageComposeViewController, didFinishWith result: MessageComposeResult) {
+        switch (result.rawValue) {
+        case MessageComposeResult.cancelled.rawValue:
+//            print("Message was cancelled")
+            self.dismiss(animated: true, completion: nil)
+        case MessageComposeResult.failed.rawValue:
+//            print("Message failed")
+            self.dismiss(animated: true, completion: nil)
+        case MessageComposeResult.sent.rawValue:
+//            print("Message was sent")
+            self.dismiss(animated: true, completion: nil)
+        default:
+            break;
+        }
+    }
+
     override func viewWillAppear(_ animated: Bool) {
         let showTask = didReceiveTaskNotification()
         if (showTask) {
@@ -63,11 +94,11 @@ class progressVC: UIViewController {
     }
     
     func didReceiveTaskNotification()->Bool{
-        print(defaults.value(forKey: "lastNotified"))
+//        print(defaults.value(forKey: "lastNotified"))
         let currentTime = Date().timeIntervalSince1970 as Double
         let lastNotified = defaults.value(forKey: "lastNotified") as! Double
         let timeElapsed = currentTime - lastNotified
-        print(timeElapsed)
+//        print(timeElapsed)
         if(timeElapsed <= timeFilter) {
             return true
         } else {
@@ -88,18 +119,19 @@ class progressVC: UIViewController {
 //            let requestTime: Int
 //            let deadline: Int
 //            let taskId: String
-            
-            let requester = json["user"]
-            let taskLocation = json["taskLocation"]
-            let dropOffLocation = json["dropoff"]
-            let taskDescription = json["description"]
-            let requestTime = json["requestTime"]
-            let deadline = json["deadline"]
-            let oid = json["_id"] as! [String: Any]
-            let taskId = oid["$oid"]
-            
-            self.currentTask = Task(requester: requester as! String, taskLocation: taskLocation as! String, dropOffLocation: dropOffLocation as! String, taskDescription: taskDescription as! String, requestTime: requestTime as! Int, deadline: deadline as! Int, taskId: taskId as! String)
-            self.center.post(name: NSNotification.Name(rawValue: "updateDetail"), object: nil, userInfo: nil)
+            if let requester = json["user"] {
+                let requester = json["user"]
+                let taskLocation = json["taskLocation"]
+                let dropOffLocation = json["dropoff"]
+                let taskDescription = json["description"]
+                let requestTime = json["requestTime"]
+                let deadline = json["deadline"]
+                let oid = json["_id"] as! [String: Any]
+                let taskId = oid["$oid"]
+                
+                self.currentTask = Task(requester: requester as! String, taskLocation: taskLocation as! String, dropOffLocation: dropOffLocation as! String, taskDescription: taskDescription as! String, requestTime: requestTime as! Int, deadline: deadline as! Int, taskId: taskId as! String)
+                self.center.post(name: NSNotification.Name(rawValue: "updateDetail"), object: nil, userInfo: nil)
+            }
         }
     }
     
@@ -152,19 +184,19 @@ class progressVC: UIViewController {
             act in
             self.didHelp()
 //            self.switchToNextTab()
-            print("yes")
+//            print("yes")
         }
         
         let notFoundAction = UIAlertAction(title: "NO", style: UIAlertActionStyle.destructive) {
             act in
             self.didDecline()
 //            self.switchToNextTab()
-            print("no")
+//            print("no")
         }
         
         let cancelAction = UIAlertAction(title: "Cancel", style: UIAlertActionStyle.cancel) {
             act in
-            print("no")
+//            print("no")
         }
         
         alert.addAction(foundAction)
@@ -180,18 +212,18 @@ class progressVC: UIViewController {
         
         CommManager.instance.urlRequest(route: "helpActivity", parameters: param, completion: {
             json in
-            print("thanks")
+//            print("thanks")
         })
         switchToNextTab()
     }
     
     func didDecline() {
-        print("did decline")
+//        print("did decline")
         let param = ["user":(CURRENT_USER?.username)! ?? "", "taskId": currentTask?.taskId, "didHelp": false, "date":Date().timeIntervalSince1970, "decisionActivityId": decisionActivityId] as [String : Any]
         
         CommManager.instance.urlRequest(route: "helpActivity", parameters: param, completion: {
             json in
-            print("thanks")
+//            print("thanks")
         })
     }
     
