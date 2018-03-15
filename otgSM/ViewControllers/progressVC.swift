@@ -15,7 +15,7 @@ class progressVC: UIViewController {
     
     let defaults = UserDefaults.standard
     
-    let timeFilter = 60.0 * 3.0
+    let timeFilter = 60.0 * 5.0
 
     @IBOutlet weak var requesterField: UILabel!
     @IBOutlet weak var taskDescriptionField: UILabel!
@@ -151,14 +151,14 @@ class progressVC: UIViewController {
         let foundAction = UIAlertAction(title: "YES", style: UIAlertActionStyle.default) {
             act in
             self.didHelp()
-            self.switchToNextTab()
+//            self.switchToNextTab()
             print("yes")
         }
         
         let notFoundAction = UIAlertAction(title: "NO", style: UIAlertActionStyle.destructive) {
             act in
             self.didDecline()
-            self.switchToNextTab()
+//            self.switchToNextTab()
             print("no")
         }
         
