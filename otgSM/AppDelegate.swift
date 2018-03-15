@@ -84,6 +84,38 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         
         // also set lastNotified to 0
         defaults.set(0, forKey: "lastNotified")
+        
+        
+//        let config = URLSessionConfiguration.default
+//        let session: URLSession = URLSession(configuration: config)
+//        
+//        let username = "yk"
+//        let url : String = "\(Config.URL)/user?username=\(username)&tokenId=\(deviceTokenString)"
+//        let urlStr : String = url.addingPercentEncoding(withAllowedCharacters:NSCharacterSet.urlQueryAllowed)!
+//        let searchURL : URL = URL(string: urlStr as String)!
+//        do {
+//            let task = session.dataTask(with: searchURL, completionHandler: {
+//                (data, response, error) in
+//                if error != nil {
+//                    print(error?.localizedDescription)
+//                }
+//                if data != nil {
+//                    do {
+//                        if let json = try JSONSerialization.jsonObject(with: data!, options: .allowFragments) as? [String: Any] {
+//                            print(json)
+//                            if json["result"] as! String == "success" {
+//                                print("success")
+//                            } else if json["result"] as! String == "failed" {
+//                                print("failed")
+//                            }
+//                        }
+//                    } catch let error as NSError {
+//                        print(error)
+//                    }
+//                }
+//            })
+//            task.resume()
+//        }
     }
     
     func application(_ application: UIApplication,

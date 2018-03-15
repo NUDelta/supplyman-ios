@@ -157,6 +157,7 @@ class progressVC: UIViewController {
         
         let notFoundAction = UIAlertAction(title: "NO", style: UIAlertActionStyle.destructive) {
             act in
+            self.didDecline()
             self.switchToNextTab()
             print("no")
         }
