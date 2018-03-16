@@ -304,27 +304,31 @@
         <scene sceneID="I3s-Io-cbk">
             <objects>
                 <viewController storyboardIdentifier="loginVC" id="WS2-mz-HTU" customClass="loginVC" customModule="otgSM" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" ambiguous="YES" id="2As-ix-k6A">
+                    <view key="view" contentMode="scaleToFill" id="2As-ix-k6A">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Username" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ffy-Yf-SG1">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Username" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ffy-Yf-SG1">
                                 <rect key="frame" x="16" y="29" width="84" height="49"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="84" id="Bkt-MP-xam"/>
+                                    <constraint firstAttribute="width" constant="84" id="SrW-ha-aNH"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="textColor"/>
+                                <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <textField opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="XeN-nS-xrW">
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="XeN-nS-xrW">
                                 <rect key="frame" x="116" y="38" width="188" height="30"/>
                                 <nil key="textColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
-                            <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uAp-SG-g7u">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uAp-SG-g7u">
                                 <rect key="frame" x="16" y="284" width="288" height="98"/>
+                                <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="98" id="HBe-G0-oil"/>
+                                </constraints>
                                 <state key="normal" title="Log In"/>
                                 <connections>
                                     <action selector="loginButton:" destination="WS2-mz-HTU" eventType="touchUpInside" id="33L-3O-BfU"/>
@@ -334,16 +338,15 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="uAp-SG-g7u" firstAttribute="centerY" secondItem="2As-ix-k6A" secondAttribute="centerY" id="89a-cZ-kXl"/>
-                            <constraint firstItem="XeN-nS-xrW" firstAttribute="leading" secondItem="ffy-Yf-SG1" secondAttribute="trailing" constant="16" id="IbX-wy-d23"/>
-                            <constraint firstItem="XeN-nS-xrW" firstAttribute="top" secondItem="F9i-P3-ynT" secondAttribute="top" constant="18" id="W2u-ux-uIb"/>
-                            <constraint firstItem="F9i-P3-ynT" firstAttribute="bottom" secondItem="uAp-SG-g7u" secondAttribute="bottom" constant="285" id="eWY-5c-esP"/>
-                            <constraint firstItem="ffy-Yf-SG1" firstAttribute="centerY" secondItem="XeN-nS-xrW" secondAttribute="centerY" id="fFc-g7-42w"/>
-                            <constraint firstItem="ffy-Yf-SG1" firstAttribute="leading" secondItem="uAp-SG-g7u" secondAttribute="leading" id="jmd-Yg-i80"/>
-                            <constraint firstItem="XeN-nS-xrW" firstAttribute="trailing" secondItem="2As-ix-k6A" secondAttribute="trailingMargin" id="pdF-wB-wi5"/>
-                            <constraint firstItem="ffy-Yf-SG1" firstAttribute="leading" secondItem="2As-ix-k6A" secondAttribute="leadingMargin" id="r8A-Xj-K06"/>
-                            <constraint firstItem="ffy-Yf-SG1" firstAttribute="top" secondItem="F9i-P3-ynT" secondAttribute="top" constant="9" id="u6w-jE-Qci"/>
-                            <constraint firstItem="XeN-nS-xrW" firstAttribute="trailing" secondItem="uAp-SG-g7u" secondAttribute="trailing" id="uDT-uD-fR2"/>
+                            <constraint firstItem="ffy-Yf-SG1" firstAttribute="leading" secondItem="uAp-SG-g7u" secondAttribute="leading" id="CqU-Ah-TfQ"/>
+                            <constraint firstItem="ffy-Yf-SG1" firstAttribute="centerY" secondItem="XeN-nS-xrW" secondAttribute="centerY" id="DU7-ji-3kP"/>
+                            <constraint firstItem="ffy-Yf-SG1" firstAttribute="top" secondItem="F9i-P3-ynT" secondAttribute="top" constant="9" id="HWK-mS-Rx2"/>
+                            <constraint firstItem="ffy-Yf-SG1" firstAttribute="leading" secondItem="2As-ix-k6A" secondAttribute="leadingMargin" id="bKf-8W-RvS"/>
+                            <constraint firstItem="F9i-P3-ynT" firstAttribute="bottom" secondItem="uAp-SG-g7u" secondAttribute="bottom" constant="186" id="e1h-wE-DQP"/>
+                            <constraint firstItem="XeN-nS-xrW" firstAttribute="leading" secondItem="ffy-Yf-SG1" secondAttribute="trailing" constant="16" id="gRL-4c-RNh"/>
+                            <constraint firstItem="XeN-nS-xrW" firstAttribute="trailing" secondItem="2As-ix-k6A" secondAttribute="trailingMargin" id="n2F-Kh-m7E"/>
+                            <constraint firstItem="XeN-nS-xrW" firstAttribute="trailing" secondItem="uAp-SG-g7u" secondAttribute="trailing" id="ws4-nb-LO6"/>
+                            <constraint firstItem="XeN-nS-xrW" firstAttribute="top" secondItem="F9i-P3-ynT" secondAttribute="top" constant="18" id="zkm-fv-RZa"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="F9i-P3-ynT"/>
                     </view>

@@ -8,7 +8,7 @@
 
 import UIKit
 
-class loginVC: UIViewController {
+class loginVC: UIViewController, UITextFieldDelegate {
 
     @IBOutlet weak var usernameTextField: UITextField!
     
@@ -17,10 +17,23 @@ class loginVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        usernameTextField.delegate = self
+
         uuid = uuid.replacingOccurrences(of: "-", with: "")
 
         fillUserNameWithUUID()
+        
         // Do any additional setup after loading the view.
+    }
+    
+    // end editing by removing the keyboard
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
+    }
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        self.view.endEditing(true)
     }
     
     func fillUserNameWithUUID() {
