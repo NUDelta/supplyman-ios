@@ -33,7 +33,7 @@ class Pretracker: NSObject, CLLocationManagerDelegate, UNUserNotificationCenterD
     
     let taskLocationLat = 42.058334
     let taskLocationLon = -87.683653
-    let notificationRadius = 350.0
+    let notificationRadius = 300.0
     
     public static let sharedManager = Pretracker()
     
@@ -77,16 +77,32 @@ class Pretracker: NSObject, CLLocationManagerDelegate, UNUserNotificationCenterD
         
         // geofence for coffee lab.
         let center = CLLocationCoordinate2D(latitude: taskLocationLat, longitude: taskLocationLon)
-        let taskRegion = CLCircularRegion(center: center, radius: notificationRadius, identifier: "coffee lab")
+        let taskRegion = CLCircularRegion(center: center, radius: notificationRadius, identifier: "coffee lab 300")
         
         // Beacon region for cofffee lab.
-        let beaconRegion = CLBeaconRegion(proximityUUID: UUID(uuidString:"B9407F30-F5F8-466E-AFF9-25556B57FE6D")!, major: 8708, minor: 27238, identifier: "coffeeLab")
+        let beaconRegion = CLBeaconRegion(proximityUUID: UUID(uuidString:"B9407F30-F5F8-466E-AFF9-25556B57FE6D")!, major: 8708, minor: 27238, identifier: "coffee lab beacon")
         
         let innerCenter = CLLocationCoordinate2D(latitude: taskLocationLat, longitude: taskLocationLon)
-        let innerTaskRegion = CLCircularRegion(center: center, radius: 200, identifier: "coffee lab inner")
+        let taskRegion200 = CLCircularRegion(center: center, radius: 200, identifier: "coffee lab 200")
+        
+        let taskRegion150 = CLCircularRegion(center: center, radius: 150, identifier: "coffee lab 150")
+
+        let taskRegion100 = CLCircularRegion(center: center, radius: 100, identifier: "coffee lab 100")
+        
+        let leftCenter = CLLocationCoordinate2D(latitude: 42.058456, longitude: -87.684264)
+
+        let taskRegionLeft = CLCircularRegion(center: leftCenter, radius: 100, identifier: "coffee lab left")
+        
+        let rightCenter = CLLocationCoordinate2D(latitude: 42.058441, longitude: -87.683076)
+        
+        let taskRegionRight = CLCircularRegion(center: leftCenter, radius: 10, identifier: "coffee lab right")
         
         locationManager.startMonitoring(for: taskRegion)
-        locationManager.startMonitoring(for: innerTaskRegion)
+        locationManager.startMonitoring(for: taskRegion200)
+        locationManager.startMonitoring(for: taskRegion150)
+        locationManager.startMonitoring(for: taskRegion100)
+        locationManager.startMonitoring(for: taskRegionLeft)
+        locationManager.startMonitoring(for: taskRegionRight)
 
         beaconManager.startMonitoring(for: beaconRegion)
         beaconRegion.notifyEntryStateOnDisplay = true
@@ -296,9 +312,10 @@ class Pretracker: NSObject, CLLocationManagerDelegate, UNUserNotificationCenterD
             let params = ["user": (CURRENT_USER?.username)! ?? "", "date":date, "isPretrack":true, "region":region.identifier, "lat":lat,"lon":lon] as [String : Any]
             CommManager.instance.urlRequest(route: "pretrackRegion", parameters: params, completion: {
                 json in
-//                print(json)
+                //                print(json)
                 // need to add this for handling background fetch.
             })
+            
 //            print("didEnter")
         }
     }

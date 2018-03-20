@@ -30,7 +30,7 @@ class NotificationManager: NSObject {
     }
     
     func handlePeriodicSilentPush() {
-        Pretracker.sharedManager.locationManager?.requestLocation()
+        Pretracker.sharedManager.locationManager?.startUpdatingLocation()
         if let currentLocation = Pretracker.sharedManager.currentLocation {
             let lat = currentLocation.coordinate.latitude
             let lon = currentLocation.coordinate.longitude

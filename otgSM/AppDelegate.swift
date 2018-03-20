@@ -129,38 +129,55 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         
         // Handling silent push for location updates.
         if (userInfo.index(forKey: "locationUpdate") != nil) {
-            NotificationManager.sharedManager.handlePeriodicSilentPush()
+            Pretracker.sharedManager.locationManager!.startUpdatingLocation()
+            
+            if let currentLocation = Pretracker.sharedManager.currentLocation {
+                let lat = currentLocation.coordinate.latitude
+                let lon = currentLocation.coordinate.longitude
+                let speed = currentLocation.speed
+                let date = Date().timeIntervalSince1970
+                let accuracy = currentLocation.horizontalAccuracy
+                let params = ["user": (CURRENT_USER?.username)! ?? "", "lat": lat, "lon": lon, "date":date, "accuracy":accuracy, "speed":speed] as [String : Any]
+                CommManager.instance.urlRequest(route: "currentLocation", parameters: params, completion: {
+                    json in
+                    print(json)
+                    // need to add this for handling background fetch.
+                    completionHandler(UIBackgroundFetchResult.noData)
+                })
+            }
+            //        completionHandler(UIBackgroundFetchResult.noData)
+//            NotificationManager.sharedManager.handlePeriodicSilentPush()
         }
         
         // Some pretracking logic here:
         // IF a user enters a geofence, start updating location.
         // IF a user exits a geofence, start monitoring significant location changes.
         
-        if (userInfo.index(forKey: "inRegion") != nil) {
-//            print(userInfo["inRegion"]!)
-            let inRegion = userInfo["inRegion"] as! Int
-            if(inRegion==1){
-                Pretracker.sharedManager.locationManager!.stopMonitoringSignificantLocationChanges()
-                
-                Pretracker.sharedManager.locationManager!.distanceFilter = CLLocationDistance(10)
-                Pretracker.sharedManager.locationManager!.desiredAccuracy = kCLLocationAccuracyBestForNavigation
-                
-                Pretracker.sharedManager.locationManager?.startUpdatingLocation()
-
-//                print(Pretracker.sharedManager.locationManager?.desiredAccuracy)
-//                print(Pretracker.sharedManager.locationManager?.distanceFilter)
-            } else {
-                Pretracker.sharedManager.activeRegions()
-                Pretracker.sharedManager.locationManager!.stopUpdatingLocation()
-                Pretracker.sharedManager.locationManager!.startMonitoringSignificantLocationChanges()
-                
-//                Pretracker.sharedManager.locationManager!.distanceFilter = CLLocationDistance(80)
-
-//                print(Pretracker.sharedManager.locationManager?.desiredAccuracy)
-//                print(Pretracker.sharedManager.locationManager?.distanceFilter)
-            }
-        }
-        completionHandler(UIBackgroundFetchResult.noData)
+//        if (userInfo.index(forKey: "inRegion") != nil) {
+////            print(userInfo["inRegion"]!)
+//            let inRegion = userInfo["inRegion"] as! Int
+//            if(inRegion==1){
+////                Pretracker.sharedManager.locationManager!.stopMonitoringSignificantLocationChanges()
+//
+////                Pretracker.sharedManager.locationManager!.distanceFilter = CLLocationDistance(10)
+////                Pretracker.sharedManager.locationManager!.desiredAccuracy = kCLLocationAccuracyBestForNavigation
+//
+//                Pretracker.sharedManager.locationManager?.startUpdatingLocation()
+//
+////                print(Pretracker.sharedManager.locationManager?.desiredAccuracy)
+////                print(Pretracker.sharedManager.locationManager?.distanceFilter)
+//            } else {
+////                Pretracker.sharedManager.activeRegions()
+////                Pretracker.sharedManager.locationManager!.stopUpdatingLocation()
+////                Pretracker.sharedManager.locationManager!.startMonitoringSignificantLocationChanges()
+//
+////                Pretracker.sharedManager.locationManager!.distanceFilter = CLLocationDistance(80)
+//
+////                print(Pretracker.sharedManager.locationManager?.desiredAccuracy)
+////                print(Pretracker.sharedManager.locationManager?.distanceFilter)
+//            }
+//        }
+//        completionHandler(UIBackgroundFetchResult.noData)
     }
 
     func applicationWillResignActive(_ application: UIApplication) {
