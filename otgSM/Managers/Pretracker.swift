@@ -73,11 +73,11 @@ class Pretracker: NSObject, CLLocationManagerDelegate, UNUserNotificationCenterD
         // We should always enable this for background location tracking.
         locationManager.allowsBackgroundLocationUpdates = true
         //        locationManager.pausesLocationUpdatesAutomatically = true
-        //        locationManager.startUpdatingLocation()
+        locationManager.startUpdatingLocation()
         
         // geofence for coffee lab.
         let center = CLLocationCoordinate2D(latitude: taskLocationLat, longitude: taskLocationLon)
-        let taskRegion = CLCircularRegion(center: center, radius: notificationRadius, identifier: "coffee lab 300")
+        let taskRegion = CLCircularRegion(center: center, radius: notificationRadius, identifier: "coffee lab")
         
         // Beacon region for cofffee lab.
         let beaconRegion = CLBeaconRegion(proximityUUID: UUID(uuidString:"B9407F30-F5F8-466E-AFF9-25556B57FE6D")!, major: 8708, minor: 27238, identifier: "coffee lab beacon")
@@ -91,11 +91,11 @@ class Pretracker: NSObject, CLLocationManagerDelegate, UNUserNotificationCenterD
         
         let leftCenter = CLLocationCoordinate2D(latitude: 42.058456, longitude: -87.684264)
 
-        let taskRegionLeft = CLCircularRegion(center: leftCenter, radius: 100, identifier: "coffee lab left")
+        let taskRegionLeft = CLCircularRegion(center: leftCenter, radius: 110, identifier: "coffee lab left")
         
         let rightCenter = CLLocationCoordinate2D(latitude: 42.058441, longitude: -87.683076)
         
-        let taskRegionRight = CLCircularRegion(center: leftCenter, radius: 10, identifier: "coffee lab right")
+        let taskRegionRight = CLCircularRegion(center: leftCenter, radius: 110, identifier: "coffee lab right")
         
         locationManager.startMonitoring(for: taskRegion)
         locationManager.startMonitoring(for: taskRegion200)
@@ -323,19 +323,21 @@ class Pretracker: NSObject, CLLocationManagerDelegate, UNUserNotificationCenterD
     public func locationManager(_ manager: CLLocationManager, didExitRegion region: CLRegion) {
         if(!(region is CLBeaconRegion)){
             
-            let date = Date().timeIntervalSince1970
-            let lat = currentLocation?.coordinate.latitude ?? 0.0
-            let lon = currentLocation?.coordinate.longitude ?? 0.0
-            
-            let params = ["user": (CURRENT_USER?.username)! , "date":date, "isPretrack":false, "region": region.identifier, "lat":lat,"lon":lon] as [String : Any]
-            
-//            print(params)
-            
-            CommManager.instance.urlRequest(route: "pretrackRegion", parameters: params, completion: {
-                json in
-//                print(json)
-                // need to add this for handling background fetch.
-            })
+            if(region.identifier=="coffee lab 300") {
+                let date = Date().timeIntervalSince1970
+                let lat = currentLocation?.coordinate.latitude ?? 0.0
+                let lon = currentLocation?.coordinate.longitude ?? 0.0
+                
+                let params = ["user": (CURRENT_USER?.username)! , "date":date, "isPretrack":false, "region": region.identifier, "lat":lat,"lon":lon] as [String : Any]
+                
+                //            print(params)
+                
+                CommManager.instance.urlRequest(route: "pretrackRegion", parameters: params, completion: {
+                    json in
+                    //                print(json)
+                    // need to add this for handling background fetch.
+                })
+            }
 //            print(region)
 //            print("didExit")
         }
