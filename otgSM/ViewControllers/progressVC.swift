@@ -76,7 +76,7 @@ class progressVC: UIViewController, MFMessageComposeViewControllerDelegate {
         getTask()
         let showTask = didReceiveTaskNotification()
         if (showTask) {
-            getTask()
+//            getTask()
             helpButton.isHidden = false
             declineButton.isHidden = false
         } else {

@@ -26,7 +26,7 @@ class NotificationManager: NSObject {
         defaults.set(decisionActivityId, forKey:"decisionActivityId")
         
         // get task details when gets a notification.
-        self.center.post(name: NSNotification.Name(rawValue: "getTaskNotification"), object: nil, userInfo: nil)
+//        self.center.post(name: NSNotification.Name(rawValue: "getTaskNotification"), object: nil, userInfo: nil)
     }
     
     func handlePeriodicSilentPush() {
