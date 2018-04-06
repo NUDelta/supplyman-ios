@@ -16,7 +16,7 @@ class progressVC: UIViewController, MFMessageComposeViewControllerDelegate {
     
     let defaults = UserDefaults.standard
     
-    let timeFilter = 60.0 * 5.0
+    let timeFilter = 60.0 * 30.0
 
     @IBOutlet weak var requesterField: UILabel!
     @IBOutlet weak var taskDescriptionField: UILabel!
@@ -33,8 +33,8 @@ class progressVC: UIViewController, MFMessageComposeViewControllerDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-//        Pretracker.sharedManager.locationManager!.startUpdatingLocation()
-        Pretracker.sharedManager.locationManager!.startMonitoringSignificantLocationChanges()
+        Pretracker.sharedManager.locationManager!.startUpdatingLocation()
+//        Pretracker.sharedManager.locationManager!.startMonitoringSignificantLocationChanges()
         
         // add observer for task notification.
         center.addObserver(forName: NSNotification.Name(rawValue: "getTaskNotification"), object: nil, queue: OperationQueue.main, using: getTaskNotification)
@@ -73,6 +73,7 @@ class progressVC: UIViewController, MFMessageComposeViewControllerDelegate {
     }
 
     override func viewWillAppear(_ animated: Bool) {
+        getTask()
         let showTask = didReceiveTaskNotification()
         if (showTask) {
             getTask()
@@ -108,29 +109,33 @@ class progressVC: UIViewController, MFMessageComposeViewControllerDelegate {
     
     func getTask() {
         // such a hacky way send get request when there is no parameter needed...
-        CommManager.instance.getRequest(route: "getTask", parameters:["foo":"bar"]) {
-            json in
-            print (json)
-            
-//            let requester: String
-//            let taskLocation: String
-//            let dropOffLocation: String
-//            let taskDescription: String
-//            let requestTime: Int
-//            let deadline: Int
-//            let taskId: String
-            if let requester = json["user"] {
-                let requester = json["user"]
-                let taskLocation = json["taskLocation"]
-                let dropOffLocation = json["dropoff"]
-                let taskDescription = json["description"]
-                let requestTime = json["requestTime"]
-                let deadline = json["deadline"]
-                let oid = json["_id"] as! [String: Any]
-                let taskId = oid["$oid"]
+        let defaults = UserDefaults.standard
+        
+        if let username = defaults.value(forKey: "username") as? String {
+            CommManager.instance.getRequest(route: "getTask", parameters:["user":username]) {
+                json in
+                print (json)
                 
-                self.currentTask = Task(requester: requester as! String, taskLocation: taskLocation as! String, dropOffLocation: dropOffLocation as! String, taskDescription: taskDescription as! String, requestTime: requestTime as! Int, deadline: deadline as! Int, taskId: taskId as! String)
-                self.center.post(name: NSNotification.Name(rawValue: "updateDetail"), object: nil, userInfo: nil)
+                //            let requester: String
+                //            let taskLocation: String
+                //            let dropOffLocation: String
+                //            let taskDescription: String
+                //            let requestTime: Int
+                //            let deadline: Int
+                //            let taskId: String
+                if let requester = json["user"] {
+                    let requester = json["user"]
+                    let taskLocation = json["taskLocation"]
+                    let dropOffLocation = json["dropoff"]
+                    let taskDescription = json["description"]
+                    let requestTime = json["requestTime"]
+                    let deadline = json["deadline"]
+                    let oid = json["_id"] as! [String: Any]
+                    let taskId = oid["$oid"]
+                    
+                    self.currentTask = Task(requester: requester as! String, taskLocation: taskLocation as! String, dropOffLocation: dropOffLocation as! String, taskDescription: taskDescription as! String, requestTime: requestTime as! NSNumber, deadline: deadline as! NSNumber, taskId: taskId as! String)
+                    self.center.post(name: NSNotification.Name(rawValue: "updateDetail"), object: nil, userInfo: nil)
+                }
             }
         }
     }

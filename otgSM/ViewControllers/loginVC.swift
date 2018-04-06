@@ -21,7 +21,7 @@ class loginVC: UIViewController, UITextFieldDelegate {
 
         uuid = uuid.replacingOccurrences(of: "-", with: "")
 
-        fillUserNameWithUUID()
+//        fillUserNameWithUUID()
         
         // Do any additional setup after loading the view.
     }

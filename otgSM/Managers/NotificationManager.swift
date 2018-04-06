@@ -43,14 +43,7 @@ class NotificationManager: NSObject {
                     json in
                     // need to add this for handling background fetch.
                 })
-            } else {
-                let params = ["user": "", "lat": lat, "lon": lon, "date":date, "accuracy":accuracy, "speed":speed] as [String : Any]
-                CommManager.instance.urlRequest(route: "currentLocation", parameters: params, completion: {
-                    json in
-                    // need to add this for handling background fetch.
-                })
             }
-            
         }
     }
 }

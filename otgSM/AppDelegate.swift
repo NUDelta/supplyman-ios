@@ -90,7 +90,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     func application(_ application: UIApplication,
                      didFailToRegisterForRemoteNotificationsWithError error: Error) {
         // The token is not currently available.
-//        print("Remote notification support is unavailable due to error: \(error.localizedDescription)")
+        print("Remote notification support is unavailable due to error: \(error.localizedDescription)")
     }
     
     // Handle data received from push.
@@ -102,11 +102,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         
         // store last task notification time to show task details and button.
         if (userInfo.index(forKey: "taskNotification") != nil) {
+            let date = Date().timeIntervalSince1970
+            defaults.set(date, forKey: "lastNotified")
+            // get task details when gets a notification.
+            self.center.post(name: NSNotification.Name(rawValue: "getTaskNotification"), object: nil, userInfo: nil)
+            
             if(userInfo.index(forKey: "decisionActivityId") != nil) {
                 let decisionActivityId = userInfo["decisionActivityId"] as! String
                 NotificationManager.sharedManager.handleTaskNotification(decisionActivityId)
             }
-            
         }
         
         // Adding beacon region or geofence based on region type.
@@ -142,7 +146,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
                     json in
                     print(json)
                     // need to add this for handling background fetch.
-                    completionHandler(UIBackgroundFetchResult.noData)
+//                    completionHandler(UIBackgroundFetchResult.noData)
                 })
             }
             //        completionHandler(UIBackgroundFetchResult.noData)
@@ -193,7 +197,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     func applicationWillEnterForeground(_ application: UIApplication) {
         
         // Update the task fields whenever a user re-enters the app.
-        self.center.post(name: NSNotification.Name(rawValue: "updateDetail"), object: nil, userInfo: nil)
+        self.center.post(name: NSNotification.Name(rawValue: "getTaskNotification"), object: nil, userInfo: nil)
         // Called as part of the transition from the background to the active state; here you can undo many of the changes made on entering the background.
     }
 

@@ -13,11 +13,11 @@ class Task: NSObject {
     let taskLocation: String
     let dropOffLocation: String
     let taskDescription: String
-    let requestTime: Int
-    let deadline: Int
+    let requestTime: NSNumber
+    let deadline: NSNumber
     let taskId: String
     
-    init(requester: String, taskLocation: String, dropOffLocation: String, taskDescription: String, requestTime: Int, deadline: Int, taskId: String) {
+    init(requester: String, taskLocation: String, dropOffLocation: String, taskDescription: String, requestTime: NSNumber, deadline: NSNumber, taskId: String) {
         self.requester = requester
         self.taskLocation = taskLocation
         self.dropOffLocation = dropOffLocation

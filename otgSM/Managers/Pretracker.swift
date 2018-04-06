@@ -20,7 +20,7 @@ class Pretracker: NSObject, CLLocationManagerDelegate, UNUserNotificationCenterD
     var hasPosted = false
     
     // 40-50 meters = road segment change
-    let distanceUpdate = 10.0
+    let distanceUpdate = 5.0
     var clLocationList = [CLLocation]()
     
     var locationManager:CLLocationManager?
@@ -61,6 +61,7 @@ class Pretracker: NSObject, CLLocationManagerDelegate, UNUserNotificationCenterD
         locationManager.desiredAccuracy = kCLLocationAccuracyBestForNavigation
         locationManager.distanceFilter = CLLocationDistance(distanceUpdate)
         
+        
         // MUST DO! location manager authorization
         locationManager.requestAlwaysAuthorization()
         locationManager.requestWhenInUseAuthorization()
@@ -77,12 +78,13 @@ class Pretracker: NSObject, CLLocationManagerDelegate, UNUserNotificationCenterD
         
         // geofence for coffee lab.
         let center = CLLocationCoordinate2D(latitude: taskLocationLat, longitude: taskLocationLon)
-        let taskRegion = CLCircularRegion(center: center, radius: notificationRadius, identifier: "coffee lab")
+        let taskRegion = CLCircularRegion(center: center, radius: notificationRadius, identifier: "coffee lab 300")
         
         // Beacon region for cofffee lab.
-        let beaconRegion = CLBeaconRegion(proximityUUID: UUID(uuidString:"B9407F30-F5F8-466E-AFF9-25556B57FE6D")!, major: 8708, minor: 27238, identifier: "coffee lab beacon")
+        let beaconRegion = CLBeaconRegion(proximityUUID: UUID(uuidString:"B9407F30-F5F8-466E-AFF9-25556B57FE6D")!, major: 60911, minor: 25867, identifier: "coffee lab beacon")
         
         let innerCenter = CLLocationCoordinate2D(latitude: taskLocationLat, longitude: taskLocationLon)
+        
         let taskRegion200 = CLCircularRegion(center: center, radius: 200, identifier: "coffee lab 200")
         
         let taskRegion150 = CLCircularRegion(center: center, radius: 150, identifier: "coffee lab 150")
@@ -264,36 +266,24 @@ class Pretracker: NSObject, CLLocationManagerDelegate, UNUserNotificationCenterD
         //call CommManager POST method
         if checkLocationAccuracy(lastLocation) {
             self.currentLocation = lastLocation
+            let lat = lastLocation.coordinate.latitude
+            let lon = lastLocation.coordinate.longitude
+            let speed = lastLocation.speed
+            let date = Date().timeIntervalSince1970
+            let accuracy = lastLocation.horizontalAccuracy
+    
+            let params = ["user": (CURRENT_USER?.username) ?? "", "lat": lat, "lon": lon, "date":date, "accuracy":accuracy, "speed":speed] as [String : Any]
+            CommManager.instance.urlRequest(route: "currentLocation", parameters: params, completion: {
+                json in
+    //            print(json)
+                // need to add this for handling background fetch.
+    //            completionHandler(UIBackgroundFetchResult.noData)
+            })
         }
         
-        let lat = lastLocation.coordinate.latitude
-        let lon = lastLocation.coordinate.longitude
-        let speed = lastLocation.speed
-        let date = Date().timeIntervalSince1970
-        let accuracy = lastLocation.horizontalAccuracy
-        
-        let params = ["user": (CURRENT_USER?.username) ?? "", "lat": lat, "lon": lon, "date":date, "accuracy":accuracy, "speed":speed] as [String : Any]
-        CommManager.instance.urlRequest(route: "currentLocation", parameters: params, completion: {
-            json in
-//            print(json)
-            // need to add this for handling background fetch.
-//            completionHandler(UIBackgroundFetchResult.noData)
-        })
+
         
 //        print(lastLocation)
-        
-        // receive observers with LocationUpdate
-        let nc = NotificationCenter.default
-        let userInfo = ["lat": lastLocation.coordinate.latitude,"lng": lastLocation.coordinate.longitude,"road": ["no road"]] as [String : Any]
-        nc.post(name: NSNotification.Name(rawValue: "LocationUpdate"), object: nil, userInfo: userInfo)
-        
-        
-        let distance = calculateDistance(currentLocation: lastLocation)
-        
-        if distance >= distanceUpdate {
-            addtoLocationList(lastLocation)
-            //lastUpdated()
-        }
         
     }
     
@@ -305,6 +295,14 @@ class Pretracker: NSObject, CLLocationManagerDelegate, UNUserNotificationCenterD
     
     public func locationManager(_ manager: CLLocationManager, didEnterRegion region: CLRegion) {
         if(!(region is CLBeaconRegion)){
+            
+            self.locationManager!.desiredAccuracy = kCLLocationAccuracyBestForNavigation
+            self.locationManager!.distanceFilter = CLLocationDistance(5)
+            
+            print("entering region")
+            print("Distance filter")
+            print(self.locationManager!.distanceFilter)
+             
             let date = Date().timeIntervalSince1970
             let lat = currentLocation?.coordinate.latitude ?? 0.0
             let lon = currentLocation?.coordinate.longitude ?? 0.0
@@ -337,6 +335,13 @@ class Pretracker: NSObject, CLLocationManagerDelegate, UNUserNotificationCenterD
                     //                print(json)
                     // need to add this for handling background fetch.
                 })
+                
+                self.locationManager!.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
+                self.locationManager!.distanceFilter = CLLocationDistance(50)
+                
+                print("exiting region")
+                print("Distance filter")
+                print(self.locationManager!.distanceFilter)
             }
 //            print(region)
 //            print("didExit")
