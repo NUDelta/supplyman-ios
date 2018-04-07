@@ -20,7 +20,7 @@ class Pretracker: NSObject, CLLocationManagerDelegate, UNUserNotificationCenterD
     var hasPosted = false
     
     // 40-50 meters = road segment change
-    let distanceUpdate = 5.0
+    let distanceUpdate = 10.0
     var clLocationList = [CLLocation]()
     
     var locationManager:CLLocationManager?
@@ -269,9 +269,7 @@ class Pretracker: NSObject, CLLocationManagerDelegate, UNUserNotificationCenterD
     }
     
     public func locationManager(_ manager: CLLocationManager, didEnterRegion region: CLRegion) {
-        if(!(region is CLBeaconRegion)){
-            self.locationManager?.requestLocation()
-            
+        if(!(region is CLBeaconRegion)){            
             let date = Date().timeIntervalSince1970
             let lat = currentLocation?.coordinate.latitude ?? 0.0
             let lon = currentLocation?.coordinate.longitude ?? 0.0
