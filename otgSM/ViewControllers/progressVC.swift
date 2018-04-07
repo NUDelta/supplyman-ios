@@ -16,7 +16,7 @@ class progressVC: UIViewController, MFMessageComposeViewControllerDelegate {
     
     let defaults = UserDefaults.standard
     
-    let timeFilter = 60.0 * 5.0
+    let timeFilter = 60.0 * 10.0
 
     @IBOutlet weak var requesterField: UILabel!
     @IBOutlet weak var taskDescriptionField: UILabel!
@@ -38,6 +38,8 @@ class progressVC: UIViewController, MFMessageComposeViewControllerDelegate {
         
         // add observer for task notification.
         center.addObserver(forName: NSNotification.Name(rawValue: "getTaskNotification"), object: nil, queue: OperationQueue.main, using: getTaskNotification)
+
+        center.addObserver(forName: NSNotification.Name(rawValue: "getTask"), object: nil, queue: OperationQueue.main, using: getTaskInfo)
 
         // add observer for updating the fields.
         center.addObserver(forName: NSNotification.Name(rawValue: "updateDetail"), object: nil, queue: OperationQueue.main, using: updateFields)
@@ -74,19 +76,19 @@ class progressVC: UIViewController, MFMessageComposeViewControllerDelegate {
 
     override func viewWillAppear(_ animated: Bool) {
         getTask()
-        let showTask = didReceiveTaskNotification()
-        if (showTask) {
-//            getTask()
-            helpButton.isHidden = false
-            declineButton.isHidden = false
-        } else {
-            helpButton.isHidden = true
-            declineButton.isHidden = true
-            requesterField.text = "No request yet"
-            taskDescriptionField.text = "No request yet"
-            pickUpLocationField.text = "No request yet"
-            dropOffLocationField.text = "No request yet"
-        }
+//        let showTask = didReceiveTaskNotification()
+//        if (showTask) {
+////            getTask()
+//            helpButton.isHidden = false
+//            declineButton.isHidden = false
+//        } else {
+//            helpButton.isHidden = true
+//            declineButton.isHidden = true
+//            requesterField.text = "No request yet"
+//            taskDescriptionField.text = "No request yet"
+//            pickUpLocationField.text = "No request yet"
+//            dropOffLocationField.text = "No request yet"
+//        }
     }
 
     override func didReceiveMemoryWarning() {
@@ -96,7 +98,7 @@ class progressVC: UIViewController, MFMessageComposeViewControllerDelegate {
     
     func didReceiveTaskNotification()->Bool{
         let currentTime = Date().timeIntervalSince1970 as Double
-        let lastNotified = defaults.value(forKey: "lastNotified") as! Double
+        let lastNotified = defaults.value(forKey: "lastNotified") as? Double ?? currentTime
         let timeElapsed = currentTime - lastNotified
 //        print(timeElapsed)
         if(timeElapsed <= timeFilter) {
@@ -133,14 +135,81 @@ class progressVC: UIViewController, MFMessageComposeViewControllerDelegate {
                     let taskId = oid["$oid"]
                     
                     self.currentTask = Task(requester: requester as! String, taskLocation: taskLocation as! String, dropOffLocation: dropOffLocation as! String, taskDescription: taskDescription as! String, requestTime: requestTime as! NSNumber, deadline: deadline as! NSNumber, taskId: taskId as! String)
-                    self.center.post(name: NSNotification.Name(rawValue: "updateDetail"), object: nil, userInfo: nil)
+                    self.getUserInfo()
+//                    self.center.post(name: NSNotification.Name(rawValue: "updateDetail"), object: nil, userInfo: nil)
                 }
             }
         }
     }
     
-    func getTaskNotification(notification: Notification) -> Void {
+    func getTaskInfo(notification: Notification) -> Void {
         getTask()
+    }
+    
+    func getTaskNotification(notification: Notification) -> Void {
+//        getTask()
+    }
+    
+    func getUserInfo() {
+        let config = URLSessionConfiguration.default
+        let session: URLSession = URLSession(configuration: config)
+        
+        let defaults = UserDefaults.standard
+        
+        let username = defaults.value(forKey: "username") as! String
+        let url : String = "\(Config.URL)/userLastNotified?username=\(username)"
+        let urlStr : String = url.addingPercentEncoding(withAllowedCharacters:NSCharacterSet.urlQueryAllowed)!
+        let searchURL : URL = URL(string: urlStr as String)!
+        do {
+            print(searchURL)
+            let task = session.dataTask(with: searchURL, completionHandler: {
+                (data, response, error) in
+                if error != nil {
+                    print(error?.localizedDescription)
+                }
+                if data != nil {
+                    do {
+                        if let json = try JSONSerialization.jsonObject(with: data!, options: .allowFragments) as? [String: Any] {
+                            //                            print(json)
+                            let currentTime = Date().timeIntervalSince1970 as Double
+                            let lastNotified = json["lastNotified"] as? Double ?? currentTime
+                            let timeElapsed = currentTime - lastNotified
+                            if(timeElapsed <= self.timeFilter) {
+                                DispatchQueue.main.async {
+                                    if let task = self.currentTask {
+                                        self.decisionActivityId = defaults.value(forKey: "decisionActivityId") as? String ?? ""
+                                        
+                                        self.requesterField.text = task.requester
+                                        self.taskDescriptionField.text = task.taskDescription
+                                        self.pickUpLocationField.text = task.taskLocation
+                                        self.dropOffLocationField.text = task.dropOffLocation
+                                        self.helpButton.isHidden = false
+                                        self.declineButton.isHidden = false
+                                    }
+                                }
+                            } else {
+                                DispatchQueue.main.async {
+                                    self.helpButton.isHidden = true
+                                    self.declineButton.isHidden = true
+                                    self.requesterField.text = "No request yet"
+                                    self.taskDescriptionField.text = "No request yet"
+                                    self.pickUpLocationField.text = "No request yet"
+                                    self.dropOffLocationField.text = "No request yet"
+                                }
+                            }
+                            
+                        }
+                    } catch let error as NSError {
+                        print(error)
+                    }
+                }
+            })
+            task.resume()
+            
+        } catch let error as NSError{
+            print(error)
+        }
+        
     }
     
     func updateFields(notification: Notification) -> Void{

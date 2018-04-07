@@ -163,7 +163,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     func applicationWillEnterForeground(_ application: UIApplication) {
         
         // Update the task fields whenever a user re-enters the app.
-        self.center.post(name: NSNotification.Name(rawValue: "getTaskNotification"), object: nil, userInfo: nil)
+        self.center.post(name: NSNotification.Name(rawValue: "getTask"), object: nil, userInfo: nil)
         // Called as part of the transition from the background to the active state; here you can undo many of the changes made on entering the background.
     }
 
