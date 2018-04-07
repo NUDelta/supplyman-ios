@@ -16,7 +16,7 @@ class progressVC: UIViewController, MFMessageComposeViewControllerDelegate {
     
     let defaults = UserDefaults.standard
     
-    let timeFilter = 60.0 * 30.0
+    let timeFilter = 60.0 * 5.0
 
     @IBOutlet weak var requesterField: UILabel!
     @IBOutlet weak var taskDescriptionField: UILabel!
@@ -95,7 +95,6 @@ class progressVC: UIViewController, MFMessageComposeViewControllerDelegate {
     }
     
     func didReceiveTaskNotification()->Bool{
-//        print(defaults.value(forKey: "lastNotified"))
         let currentTime = Date().timeIntervalSince1970 as Double
         let lastNotified = defaults.value(forKey: "lastNotified") as! Double
         let timeElapsed = currentTime - lastNotified

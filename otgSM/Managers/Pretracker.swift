@@ -58,7 +58,7 @@ class Pretracker: NSObject, CLLocationManagerDelegate, UNUserNotificationCenterD
 
         // location manager initialization
         locationManager.delegate = self
-        locationManager.desiredAccuracy = kCLLocationAccuracyBestForNavigation
+        locationManager.desiredAccuracy = kCLLocationAccuracyBest
         locationManager.distanceFilter = CLLocationDistance(distanceUpdate)
         
         
@@ -83,8 +83,6 @@ class Pretracker: NSObject, CLLocationManagerDelegate, UNUserNotificationCenterD
         // Beacon region for cofffee lab.
         let beaconRegion = CLBeaconRegion(proximityUUID: UUID(uuidString:"B9407F30-F5F8-466E-AFF9-25556B57FE6D")!, major: 60911, minor: 25867, identifier: "coffee lab beacon")
         
-        let innerCenter = CLLocationCoordinate2D(latitude: taskLocationLat, longitude: taskLocationLon)
-        
         let taskRegion200 = CLCircularRegion(center: center, radius: 200, identifier: "coffee lab 200")
         
         let taskRegion150 = CLCircularRegion(center: center, radius: 150, identifier: "coffee lab 150")
@@ -97,7 +95,7 @@ class Pretracker: NSObject, CLLocationManagerDelegate, UNUserNotificationCenterD
         
         let rightCenter = CLLocationCoordinate2D(latitude: 42.058441, longitude: -87.683076)
         
-        let taskRegionRight = CLCircularRegion(center: leftCenter, radius: 110, identifier: "coffee lab right")
+        let taskRegionRight = CLCircularRegion(center: rightCenter, radius: 110, identifier: "coffee lab right")
         
         locationManager.startMonitoring(for: taskRegion)
         locationManager.startMonitoring(for: taskRegion200)
@@ -305,18 +303,18 @@ class Pretracker: NSObject, CLLocationManagerDelegate, UNUserNotificationCenterD
                 
 //                self.locationManager!.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
 //                self.locationManager!.distanceFilter = CLLocationDistance(50)
-            } else {
-                let date = Date().timeIntervalSince1970
-                let lat = currentLocation?.coordinate.latitude ?? 0.0
-                let lon = currentLocation?.coordinate.longitude ?? 0.0
-                
-                // we still want to pretrack but log the data.
-                let params = ["user": (CURRENT_USER?.username)! , "date":date, "isPretrack":true, "region": region.identifier, "lat":lat,"lon":lon] as [String : Any]
-                
-                CommManager.instance.urlRequest(route: "pretrackRegion", parameters: params, completion: {
-                    json in
-                    print(json)
-                })
+//            } else {
+//                let date = Date().timeIntervalSince1970
+//                let lat = currentLocation?.coordinate.latitude ?? 0.0
+//                let lon = currentLocation?.coordinate.longitude ?? 0.0
+//                
+//                // we still want to pretrack but log the data.
+//                let params = ["user": (CURRENT_USER?.username)! , "date":date, "isPretrack":true, "region": region.identifier, "lat":lat,"lon":lon] as [String : Any]
+//                
+//                CommManager.instance.urlRequest(route: "pretrackRegion", parameters: params, completion: {
+//                    json in
+//                    print(json)
+//                })
             }
         }
     }
