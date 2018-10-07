@@ -9,15 +9,16 @@
 import UIKit
 
 struct Config {
-    static let DEBUG = false
+    static let DEBUG = true
     static var URL = ""
     public static let sharedConfig = Config()
     
     init() {
         if Config.DEBUG {
-            Config.URL = "http://10.105.184.224:5000"
+//            Config.URL = "http://10.105.201.112:5000"
+            Config.URL = "http://supplyman-datacollection.herokuapp.com"
         } else {
-            Config.URL = "http://supplyman-main.herokuapp.com"
+            Config.URL = "http://supplyman-datacollection.herokuapp.com"
         }
     }
 }

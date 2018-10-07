@@ -20,7 +20,7 @@ class Pretracker: NSObject, CLLocationManagerDelegate, UNUserNotificationCenterD
     var hasPosted = false
     
     // 40-50 meters = road segment change
-    let distanceUpdate = 5.0
+    let distanceUpdate = 0.5
     var clLocationList = [CLLocation]()
     
     var locationManager:CLLocationManager?
@@ -73,7 +73,7 @@ class Pretracker: NSObject, CLLocationManagerDelegate, UNUserNotificationCenterD
         
         // We should always enable this for background location tracking.
         locationManager.allowsBackgroundLocationUpdates = true
-        //        locationManager.pausesLocationUpdatesAutomatically = true
+        locationManager.pausesLocationUpdatesAutomatically = true
         locationManager.startUpdatingLocation()
         
         // geofence for coffee lab.
@@ -97,12 +97,17 @@ class Pretracker: NSObject, CLLocationManagerDelegate, UNUserNotificationCenterD
         
         let taskRegionRight = CLCircularRegion(center: rightCenter, radius: 110, identifier: "coffee lab right")
         
+        let ykcenter = CLLocationCoordinate2D(latitude: 42.053867, longitude: -87.682034)
+        let yktaskRegion = CLCircularRegion(center: ykcenter, radius: notificationRadius, identifier: "yk 300")
+        
         locationManager.startMonitoring(for: taskRegion)
-        locationManager.startMonitoring(for: taskRegion200)
-        locationManager.startMonitoring(for: taskRegion150)
-        locationManager.startMonitoring(for: taskRegion100)
-        locationManager.startMonitoring(for: taskRegionLeft)
-        locationManager.startMonitoring(for: taskRegionRight)
+        locationManager.startMonitoring(for: yktaskRegion)
+
+//        locationManager.startMonitoring(for: taskRegion200)
+//        locationManager.startMonitoring(for: taskRegion150)
+//        locationManager.startMonitoring(for: taskRegion100)
+//        locationManager.startMonitoring(for: taskRegionLeft)
+//        locationManager.startMonitoring(for: taskRegionRight)
 
         beaconManager.startMonitoring(for: beaconRegion)
         beaconRegion.notifyEntryStateOnDisplay = true
@@ -266,6 +271,11 @@ class Pretracker: NSObject, CLLocationManagerDelegate, UNUserNotificationCenterD
         // TODO: send error messages to DBs
         
         print("Location manager failed with error: \(error)")
+        let params = ["user": (CURRENT_USER?.username)! ?? "", "errorMessage": error] as [String : Any]
+        CommManager.instance.urlRequest(route: "postErrors", parameters: params, completion: {
+            json in
+            print(json)
+        })
     }
     
     public func locationManager(_ manager: CLLocationManager, didEnterRegion region: CLRegion) {

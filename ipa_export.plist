@@ -19,8 +19,8 @@
 
     <key>provisioningProfiles</key>
     <dict>
-        <key>edu.northwestern.delta.K</key>
-        <string>Delta Lab K</string>
+        <key>edu.northwestern.delta.les</key>
+        <string>Delta Lab Les</string>
     </dict>
 </dict>
 </plist>
