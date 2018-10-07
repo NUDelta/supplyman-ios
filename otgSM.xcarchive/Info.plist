@@ -7,18 +7,20 @@
 		<key>ApplicationPath</key>
 		<string>Applications/otgSM.app</string>
 		<key>CFBundleIdentifier</key>
-		<string>edu.northwestern.delta.K</string>
+		<string>edu.northwestern.delta.les</string>
 		<key>CFBundleShortVersionString</key>
 		<string>1.0</string>
 		<key>CFBundleVersion</key>
 		<string>1</string>
 		<key>SigningIdentity</key>
 		<string>iPhone Distribution: Northwestern University</string>
+		<key>Team</key>
+		<string>823S57WQK3</string>
 	</dict>
 	<key>ArchiveVersion</key>
 	<integer>2</integer>
 	<key>CreationDate</key>
-	<date>2018-04-09T01:47:55Z</date>
+	<date>2018-10-07T05:15:52Z</date>
 	<key>Name</key>
 	<string>otgSM</string>
 	<key>SchemeName</key>
