@@ -50,6 +50,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
             application.registerForRemoteNotifications(matching: [.badge, .sound, .alert])
         }
         
+        if let _ = launchOptions?[UIApplicationLaunchOptionsKey.location] {
+            Pretracker.sharedManager.locationManager!.stopUpdatingLocation()
+            Pretracker.sharedManager.locationManager!.startUpdatingLocation()
+            Pretracker.sharedManager.locationManager!.startMonitoringSignificantLocationChanges()
+        }
+        
         // *** end here *** //
         
         // if there exists username, instantiate with tab bar
@@ -98,23 +104,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         
         // Handling silent push for location updates.
         Pretracker.sharedManager.locationManager!.stopUpdatingLocation()
-
         Pretracker.sharedManager.locationManager!.startUpdatingLocation()
-
-//        if let currentLocation = Pretracker.sharedManager.currentLocation {
-//            let lat = currentLocation.coordinate.latitude
-//            let lon = currentLocation.coordinate.longitude
-//            let speed = currentLocation.speed
-//            let date = Date().timeIntervalSince1970
-//            let accuracy = currentLocation.horizontalAccuracy
-//            let params = ["user": (CURRENT_USER?.username)! ?? "", "lat": lat, "lon": lon, "date":date, "accuracy":accuracy, "speed":speed] as [String : Any]
-//            CommManager.instance.urlRequest(route: "currentLocation", parameters: params, completion: {
-//                json in
-//                print(json)
-//                // need to add this for handling background fetch.
-//                completionHandler(UIBackgroundFetchResult.noData)
-//            })
-//        }
+        
         
         // store last task notification time to show task details and button.
         if (userInfo.index(forKey: "taskNotification") != nil) {

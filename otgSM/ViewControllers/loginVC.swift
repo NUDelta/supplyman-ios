@@ -100,7 +100,7 @@ class loginVC: UIViewController, UITextFieldDelegate {
             self.performSegue(withIdentifier: "Login Segue", sender: self)
             CURRENT_USER = User(username: username, tokenId: tokenId)
             let defaults = UserDefaults.standard
-            defaults.set(username,forKey: "username")
+            defaults.set(username, forKey: "username")
         }
         
     }

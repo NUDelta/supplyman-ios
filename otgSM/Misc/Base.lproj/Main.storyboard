@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="WS2-mz-HTU">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14313.18" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="WS2-mz-HTU">
     <device id="retina4_0" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
-        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14283.14"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -43,19 +42,19 @@
                                 <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <color key="highlightedColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="yk" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mtA-wD-yEH">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No request yet" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mtA-wD-yEH">
                                 <rect key="frame" x="16" y="51" width="146" height="34"/>
                                 <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                 <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <color key="highlightedColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Small pink can" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YOE-7L-60g">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No request yet" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YOE-7L-60g">
                                 <rect key="frame" x="16" y="124" width="288" height="34"/>
                                 <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                 <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <color key="highlightedColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Coffee Lab" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="40V-rl-19V">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No request yet" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="40V-rl-19V">
                                 <rect key="frame" x="16" y="195" width="288" height="34"/>
                                 <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                 <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -69,7 +68,7 @@
                                     <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="48" id="llH-7k-6Tx"/>
                                 </constraints>
                                 <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <state key="normal" title="I am going to help now"/>
+                                <state key="normal" title="Accept"/>
                                 <connections>
                                     <action selector="clickAcceptButton:" destination="3UP-xb-Y5X" eventType="touchUpInside" id="xdq-8I-rS0"/>
                                 </connections>
@@ -81,7 +80,7 @@
                                     <constraint firstAttribute="height" constant="48" id="DeB-23-lmj"/>
                                 </constraints>
                                 <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <state key="normal" title="I can't help right now"/>
+                                <state key="normal" title="Decline"/>
                                 <connections>
                                     <action selector="clickDeclineButton:" destination="3UP-xb-Y5X" eventType="touchUpInside" id="5dM-aO-IRD"/>
                                 </connections>
@@ -95,8 +94,8 @@
                                 <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <color key="highlightedColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Ford" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="khs-QN-YFJ">
-                                <rect key="frame" x="16" y="266" width="288" height="34"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="No request yet" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="khs-QN-YFJ">
+                                <rect key="frame" x="16" y="266" width="343" height="58"/>
                                 <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                 <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <color key="highlightedColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -113,6 +112,19 @@
                                     <action selector="textButtonClicked:" destination="3UP-xb-Y5X" eventType="touchUpInside" id="G7E-YR-YQ0"/>
                                 </connections>
                             </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Please click Accept if you can help within deadline. Otherwise, please click Decline." textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="5" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kHZ-Kg-PN4">
+                                <rect key="frame" x="16" y="466" width="288" height="45"/>
+                                <fontDescription key="fontDescription" style="UICTFontTextStyleCaption1"/>
+                                <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <color key="highlightedColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Due: " textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jsd-K4-PIB">
+                                <rect key="frame" x="16" y="308" width="288" height="26"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
+                                <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <color key="highlightedColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
@@ -127,6 +139,8 @@
                             <constraint firstItem="Z4M-1E-qnP" firstAttribute="leading" secondItem="40V-rl-19V" secondAttribute="leading" id="Cvc-NF-9zc"/>
                             <constraint firstItem="52w-Va-CRY" firstAttribute="trailing" secondItem="Ipd-Vb-O9v" secondAttribute="trailing" id="DdX-54-EhD"/>
                             <constraint firstItem="YOE-7L-60g" firstAttribute="top" secondItem="mtA-wD-yEH" secondAttribute="bottom" constant="39" id="JIf-GR-zEd"/>
+                            <constraint firstItem="kHZ-Kg-PN4" firstAttribute="leading" secondItem="Ipd-Vb-O9v" secondAttribute="leading" id="Msj-dg-Vhh"/>
+                            <constraint firstItem="kHZ-Kg-PN4" firstAttribute="bottom" secondItem="2Bp-MZ-bXc" secondAttribute="bottom" id="N6t-Q5-qAr"/>
                             <constraint firstItem="X3G-Ld-jJV" firstAttribute="top" secondItem="2Bp-MZ-bXc" secondAttribute="top" id="NFA-gt-I9L"/>
                             <constraint firstItem="YOE-7L-60g" firstAttribute="trailing" secondItem="40V-rl-19V" secondAttribute="trailing" id="NGY-2Z-ALq"/>
                             <constraint firstItem="mtA-wD-yEH" firstAttribute="leading" secondItem="JmN-KS-MnO" secondAttribute="leading" id="NQI-ks-054"/>
@@ -136,6 +150,7 @@
                             <constraint firstItem="khs-QN-YFJ" firstAttribute="trailing" secondItem="52w-Va-CRY" secondAttribute="trailing" id="SVS-Fm-myF"/>
                             <constraint firstItem="khs-QN-YFJ" firstAttribute="leading" secondItem="52w-Va-CRY" secondAttribute="leading" id="VbB-Ji-vHO"/>
                             <constraint firstItem="tLz-80-AKt" firstAttribute="leading" secondItem="mtA-wD-yEH" secondAttribute="trailing" constant="8" symbolic="YES" id="Wcz-mO-7D7"/>
+                            <constraint firstItem="kHZ-Kg-PN4" firstAttribute="trailing" secondItem="Ipd-Vb-O9v" secondAttribute="trailing" id="X8R-rX-ZTp"/>
                             <constraint firstItem="Ipd-Vb-O9v" firstAttribute="top" secondItem="52w-Va-CRY" secondAttribute="bottom" constant="30" id="awU-do-IMQ"/>
                             <constraint firstItem="40V-rl-19V" firstAttribute="top" secondItem="YOE-7L-60g" secondAttribute="bottom" constant="37" id="b01-gU-8qm"/>
                             <constraint firstItem="40V-rl-19V" firstAttribute="leading" secondItem="zl6-6i-fNI" secondAttribute="leading" id="bUs-Z0-lrm"/>
@@ -153,6 +168,7 @@
                             <constraint firstItem="X3G-Ld-jJV" firstAttribute="leading" secondItem="mtA-wD-yEH" secondAttribute="leading" id="pnb-eY-TdZ"/>
                             <constraint firstItem="X3G-Ld-jJV" firstAttribute="trailing" secondItem="JmN-KS-MnO" secondAttribute="trailing" id="sBw-rR-Sz1"/>
                             <constraint firstItem="52w-Va-CRY" firstAttribute="top" secondItem="zl6-6i-fNI" secondAttribute="bottom" constant="63" id="tQJ-ed-MeU"/>
+                            <constraint firstItem="kHZ-Kg-PN4" firstAttribute="top" secondItem="Ipd-Vb-O9v" secondAttribute="bottom" constant="8" id="tZJ-u6-UbG"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="2Bp-MZ-bXc"/>
                     </view>
@@ -160,6 +176,7 @@
                     <connections>
                         <outlet property="declineButton" destination="Ipd-Vb-O9v" id="FtY-31-08K"/>
                         <outlet property="dropOffLocationField" destination="khs-QN-YFJ" id="xYV-Rg-KWE"/>
+                        <outlet property="dueLabel" destination="jsd-K4-PIB" id="shj-cV-5xg"/>
                         <outlet property="helpButton" destination="52w-Va-CRY" id="BTS-20-MgR"/>
                         <outlet property="pickUpLocationField" destination="40V-rl-19V" id="cgk-5C-aIR"/>
                         <outlet property="requesterField" destination="mtA-wD-yEH" id="lUE-Rr-GjJ"/>
@@ -168,7 +185,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="7Mq-1b-m3z" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1288.125" y="762.67605633802816"/>
+            <point key="canvasLocation" x="-1290" y="761.61971830985919"/>
         </scene>
         <!--Profile-->
         <scene sceneID="7wM-52-Ed9">
@@ -309,7 +326,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Username" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ffy-Yf-SG1">
-                                <rect key="frame" x="16" y="29" width="84" height="49"/>
+                                <rect key="frame" x="16" y="29" width="84" height="48"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="84" id="SrW-ha-aNH"/>
                                 </constraints>

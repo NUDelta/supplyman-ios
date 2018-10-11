@@ -24,6 +24,7 @@ class progressVC: UIViewController, MFMessageComposeViewControllerDelegate {
     @IBOutlet weak var pickUpLocationField: UILabel!
     @IBOutlet weak var dropOffLocationField: UILabel!
     
+    @IBOutlet weak var dueLabel: UILabel!
     @IBOutlet weak var helpButton: UIButton!
     
     @IBOutlet weak var declineButton: UIButton!
@@ -76,19 +77,21 @@ class progressVC: UIViewController, MFMessageComposeViewControllerDelegate {
 
     override func viewWillAppear(_ animated: Bool) {
         getTask()
-//        let showTask = didReceiveTaskNotification()
-//        if (showTask) {
-////            getTask()
-//            helpButton.isHidden = false
-//            declineButton.isHidden = false
-//        } else {
-//            helpButton.isHidden = true
-//            declineButton.isHidden = true
-//            requesterField.text = "No request yet"
-//            taskDescriptionField.text = "No request yet"
-//            pickUpLocationField.text = "No request yet"
-//            dropOffLocationField.text = "No request yet"
-//        }
+        
+        // MARK TODO: uncomment this
+        let showTask = didReceiveTaskNotification()
+        if (showTask) {
+//            getTask()
+            helpButton.isHidden = false
+            declineButton.isHidden = false
+        } else {
+            helpButton.isHidden = true
+            declineButton.isHidden = true
+            requesterField.text = "No request yet"
+            taskDescriptionField.text = "No request yet"
+            pickUpLocationField.text = "No request yet"
+            dropOffLocationField.text = "No request yet"
+        }
     }
 
     override func didReceiveMemoryWarning() {
@@ -130,13 +133,22 @@ class progressVC: UIViewController, MFMessageComposeViewControllerDelegate {
                     let dropOffLocation = json["dropoff"]
                     let taskDescription = json["description"]
                     let requestTime = json["requestTime"]
-                    let deadline = json["deadline"]
+                    let deadline:Double = json["deadline"] as! Double
                     let oid = json["_id"] as! [String: Any]
                     let taskId = oid["$oid"]
                     
-                    self.currentTask = Task(requester: requester as! String, taskLocation: taskLocation as! String, dropOffLocation: dropOffLocation as! String, taskDescription: taskDescription as! String, requestTime: requestTime as! NSNumber, deadline: deadline as! NSNumber, taskId: taskId as! String)
-                    self.getUserInfo()
-//                    self.center.post(name: NSNotification.Name(rawValue: "updateDetail"), object: nil, userInfo: nil)
+                    self.currentTask = Task(requester: requester as! String, taskLocation: taskLocation as! String, dropOffLocation: dropOffLocation as! String, taskDescription: taskDescription as! String, requestTime: requestTime as! NSNumber, deadline: deadline as NSNumber, taskId: taskId as! String)
+//                    self.getUserInfo()
+                    let dayTimePeriodFormatter = DateFormatter()
+                    dayTimePeriodFormatter.locale = Locale(identifier: "en_US")
+                    dayTimePeriodFormatter.dateFormat = "MMM dd hh:mm"
+                    dayTimePeriodFormatter.timeZone = NSTimeZone(name: "CST") as TimeZone?
+                    
+                    let dateString = dayTimePeriodFormatter.string(from: NSDate(timeIntervalSince1970: TimeInterval(deadline)) as Date)
+                    
+                    print(dateString)
+                    
+                    self.center.post(name: NSNotification.Name(rawValue: "updateDetail"), object: nil, userInfo: nil)
                 }
             }
         }
@@ -183,6 +195,13 @@ class progressVC: UIViewController, MFMessageComposeViewControllerDelegate {
                                         self.taskDescriptionField.text = task.taskDescription
                                         self.pickUpLocationField.text = task.taskLocation
                                         self.dropOffLocationField.text = task.dropOffLocation
+                                        
+                                        let dayTimePeriodFormatter = DateFormatter()
+                                        dayTimePeriodFormatter.dateFormat = "MM dd hh:mm"
+                                        
+                                        let dateString = dayTimePeriodFormatter.string(from: NSDate(timeIntervalSince1970: TimeInterval(task.deadline)) as Date)
+                                    
+                                        self.dueLabel.text = "Due: " + dateString
                                         self.helpButton.isHidden = false
                                         self.declineButton.isHidden = false
                                     }
@@ -224,6 +243,18 @@ class progressVC: UIViewController, MFMessageComposeViewControllerDelegate {
                 taskDescriptionField.text = task.taskDescription
                 pickUpLocationField.text = task.taskLocation
                 dropOffLocationField.text = task.dropOffLocation
+                
+                let dayTimePeriodFormatter = DateFormatter()
+                dayTimePeriodFormatter.locale = Locale(identifier: "en_US")
+                dayTimePeriodFormatter.dateFormat = "MMM dd hh:mm"
+                dayTimePeriodFormatter.timeZone = NSTimeZone(name: "CST")! as TimeZone
+                
+                let dateString = dayTimePeriodFormatter.string(from: NSDate(timeIntervalSince1970: TimeInterval(task.deadline)) as Date)
+                
+                print(dateString)
+                
+                dueLabel.text = "Due: " + dateString
+                
                 helpButton.isHidden = false
                 declineButton.isHidden = false
             }
