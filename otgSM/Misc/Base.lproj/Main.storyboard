@@ -118,10 +118,10 @@
                                 <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <color key="highlightedColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Due: " textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jsd-K4-PIB">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Due: " lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" highlighted="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jsd-K4-PIB">
                                 <rect key="frame" x="16" y="308" width="288" height="26"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
+                                <fontDescription key="fontDescription" name=".AppleSystemUIFont" family=".AppleSystemUIFont" pointSize="17"/>
                                 <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <color key="highlightedColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </label>
@@ -176,8 +176,9 @@
                     <connections>
                         <outlet property="declineButton" destination="Ipd-Vb-O9v" id="FtY-31-08K"/>
                         <outlet property="dropOffLocationField" destination="khs-QN-YFJ" id="xYV-Rg-KWE"/>
-                        <outlet property="dueLabel" destination="jsd-K4-PIB" id="shj-cV-5xg"/>
+                        <outlet property="dueLabel" destination="jsd-K4-PIB" id="HFV-WB-UUo"/>
                         <outlet property="helpButton" destination="52w-Va-CRY" id="BTS-20-MgR"/>
+                        <outlet property="instructLabel" destination="kHZ-Kg-PN4" id="r5L-ws-72c"/>
                         <outlet property="pickUpLocationField" destination="40V-rl-19V" id="cgk-5C-aIR"/>
                         <outlet property="requesterField" destination="mtA-wD-yEH" id="lUE-Rr-GjJ"/>
                         <outlet property="taskDescriptionField" destination="YOE-7L-60g" id="NIj-T3-gtx"/>

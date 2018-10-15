@@ -115,7 +115,9 @@ class Pretracker: NSObject, CLLocationManagerDelegate, UNUserNotificationCenterD
         
         locationManager.startMonitoring(for: pretrackRegion)
         locationManager.startMonitoring(for: taskRegion)
-        locationManager.startMonitoring(for: ykRegion)
+        
+        // comment this for actual deployment
+//        locationManager.startMonitoring(for: ykRegion)
 
         beaconManager.startMonitoring(for: beaconRegion)
 //        beaconRegion.notifyEntryStateOnDisplay = true
@@ -301,7 +303,7 @@ class Pretracker: NSObject, CLLocationManagerDelegate, UNUserNotificationCenterD
                 print(json)
             })
             
-            if(region.identifier == "taskRegion" || region.identifier == "ykRegion") {
+            if(region.identifier == "pretrackRegion") {
                 // start pretracking
                 self.locationManager!.desiredAccuracy = pretrackAccuracy
                 self.locationManager!.distanceFilter = CLLocationDistance(pretrackDistanceUpdate)
@@ -315,7 +317,7 @@ class Pretracker: NSObject, CLLocationManagerDelegate, UNUserNotificationCenterD
             let lat = currentLocation?.coordinate.latitude ?? 0.0
             let lon = currentLocation?.coordinate.longitude ?? 0.0
             
-            activeRegions()
+//            activeRegions()
             
             let params = ["user": CURRENT_USER?.username ?? "" , "date":date, "isPretrack":false, "region": region.identifier, "lat":lat,"lon":lon] as [String : Any]
             CommManager.instance.urlRequest(route: "pretrackRegion", parameters: params, completion: {
@@ -323,7 +325,7 @@ class Pretracker: NSObject, CLLocationManagerDelegate, UNUserNotificationCenterD
                 print(json)
             })
             
-            if(region.identifier=="taskRegion" || region.identifier=="ykRegion") {
+            if(region.identifier=="pretrackRegion") {
                 // stop pretracking
                 self.locationManager!.desiredAccuracy = accuracy
                 self.locationManager!.distanceFilter = CLLocationDistance(distanceUpdate)

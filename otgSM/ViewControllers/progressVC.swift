@@ -16,7 +16,12 @@ class progressVC: UIViewController, MFMessageComposeViewControllerDelegate {
     
     let defaults = UserDefaults.standard
     
-    let timeFilter = 60.0 * 10.0
+    // show buttons and
+    
+    // timeFilter for button
+    let timeFilter = 60.0 * 60.0 * 3.0
+    
+    // timeFilter for requests.
 
     @IBOutlet weak var requesterField: UILabel!
     @IBOutlet weak var taskDescriptionField: UILabel!
@@ -29,6 +34,7 @@ class progressVC: UIViewController, MFMessageComposeViewControllerDelegate {
     
     @IBOutlet weak var declineButton: UIButton!
     
+    @IBOutlet weak var instructLabel: UILabel!
     var decisionActivityId: String?
     
     override func viewDidLoad() {
@@ -39,8 +45,8 @@ class progressVC: UIViewController, MFMessageComposeViewControllerDelegate {
         
         // add observer for task notification.
         center.addObserver(forName: NSNotification.Name(rawValue: "getTaskNotification"), object: nil, queue: OperationQueue.main, using: getTaskNotification)
-
-        center.addObserver(forName: NSNotification.Name(rawValue: "getTask"), object: nil, queue: OperationQueue.main, using: getTaskInfo)
+//
+//        center.addObserver(forName: NSNotification.Name(rawValue: "getTask"), object: nil, queue: OperationQueue.main, using: getTaskInfo)
 
         // add observer for updating the fields.
         center.addObserver(forName: NSNotification.Name(rawValue: "updateDetail"), object: nil, queue: OperationQueue.main, using: updateFields)
@@ -79,19 +85,24 @@ class progressVC: UIViewController, MFMessageComposeViewControllerDelegate {
         getTask()
         
         // MARK TODO: uncomment this
-        let showTask = didReceiveTaskNotification()
-        if (showTask) {
-//            getTask()
-            helpButton.isHidden = false
-            declineButton.isHidden = false
-        } else {
-            helpButton.isHidden = true
-            declineButton.isHidden = true
-            requesterField.text = "No request yet"
-            taskDescriptionField.text = "No request yet"
-            pickUpLocationField.text = "No request yet"
-            dropOffLocationField.text = "No request yet"
-        }
+//        let showTask = didReceiveTaskNotification()
+//        if (showTask) {
+////            getTask()
+//            helpButton.isHidden = false
+//            declineButton.isHidden = false
+//            instructLabel.isHidden = false
+//        } else {
+//            helpButton.isHidden = true
+//            declineButton.isHidden = true
+//            instructLabel.isHidden = true
+//
+//            // keep showing the latest request
+//            requesterField.text = "No request yet"
+//            taskDescriptionField.text = "No request yet"
+//            pickUpLocationField.text = "No request yet"
+//            dropOffLocationField.text = "No request yet"
+//            dueLabel.text = "Due: No request yet"
+//        }
     }
 
     override func didReceiveMemoryWarning() {
@@ -138,7 +149,7 @@ class progressVC: UIViewController, MFMessageComposeViewControllerDelegate {
                     let taskId = oid["$oid"]
                     
                     self.currentTask = Task(requester: requester as! String, taskLocation: taskLocation as! String, dropOffLocation: dropOffLocation as! String, taskDescription: taskDescription as! String, requestTime: requestTime as! NSNumber, deadline: deadline as NSNumber, taskId: taskId as! String)
-//                    self.getUserInfo()
+                    self.getUserInfo()
                     let dayTimePeriodFormatter = DateFormatter()
                     dayTimePeriodFormatter.locale = Locale(identifier: "en_US")
                     dayTimePeriodFormatter.dateFormat = "MMM dd hh:mm"
@@ -146,20 +157,32 @@ class progressVC: UIViewController, MFMessageComposeViewControllerDelegate {
                     
                     let dateString = dayTimePeriodFormatter.string(from: NSDate(timeIntervalSince1970: TimeInterval(deadline)) as Date)
                     
-                    print(dateString)
+//                    print(dateString)
                     
-                    self.center.post(name: NSNotification.Name(rawValue: "updateDetail"), object: nil, userInfo: nil)
+//                    self.center.post(name: NSNotification.Name(rawValue: "updateDetail"), object: nil, userInfo: nil)
+                } else {
+                    DispatchQueue.main.async {
+                        self.helpButton.isHidden = true
+                        self.declineButton.isHidden = true
+                        self.instructLabel.isHidden = true
+                        
+                        self.requesterField.text = "No request yet"
+                        self.taskDescriptionField.text = "No request yet"
+                        self.pickUpLocationField.text = "No request yet"
+                        self.dropOffLocationField.text = "No request yet"
+                        self.dueLabel.text = "Due: No request yet"
+                    }
                 }
             }
         }
     }
     
-    func getTaskInfo(notification: Notification) -> Void {
-        getTask()
-    }
-    
-    func getTaskNotification(notification: Notification) -> Void {
+//    func getTaskInfo(notification: Notification) -> Void {
 //        getTask()
+//    }
+//
+    func getTaskNotification(notification: Notification) -> Void {
+        getTask()
     }
     
     func getUserInfo() {
@@ -197,23 +220,27 @@ class progressVC: UIViewController, MFMessageComposeViewControllerDelegate {
                                         self.dropOffLocationField.text = task.dropOffLocation
                                         
                                         let dayTimePeriodFormatter = DateFormatter()
-                                        dayTimePeriodFormatter.dateFormat = "MM dd hh:mm"
+                                        dayTimePeriodFormatter.dateFormat = "MMM dd hh:mm"
                                         
                                         let dateString = dayTimePeriodFormatter.string(from: NSDate(timeIntervalSince1970: TimeInterval(task.deadline)) as Date)
                                     
                                         self.dueLabel.text = "Due: " + dateString
                                         self.helpButton.isHidden = false
                                         self.declineButton.isHidden = false
+                                        self.instructLabel.isHidden = false
                                     }
                                 }
                             } else {
                                 DispatchQueue.main.async {
                                     self.helpButton.isHidden = true
                                     self.declineButton.isHidden = true
+                                    self.instructLabel.isHidden = true
+                                    
                                     self.requesterField.text = "No request yet"
                                     self.taskDescriptionField.text = "No request yet"
                                     self.pickUpLocationField.text = "No request yet"
                                     self.dropOffLocationField.text = "No request yet"
+                                    self.dueLabel.text = "Due: No request yet"
                                 }
                             }
                             
@@ -257,14 +284,19 @@ class progressVC: UIViewController, MFMessageComposeViewControllerDelegate {
                 
                 helpButton.isHidden = false
                 declineButton.isHidden = false
+                instructLabel.isHidden = false
             }
         } else {
             helpButton.isHidden = true
             declineButton.isHidden = true
+            instructLabel.isHidden = true
+            
+            // keep showing the latest request
             requesterField.text = "No request yet"
             taskDescriptionField.text = "No request yet"
             pickUpLocationField.text = "No request yet"
             dropOffLocationField.text = "No request yet"
+            dueLabel.text = "Due: No request yet"
         }
 //        }
     }
@@ -283,7 +315,7 @@ class progressVC: UIViewController, MFMessageComposeViewControllerDelegate {
     }
     
     func showPopUp() {
-        let alert = UIAlertController(title: "Can you help deliver the item?", message: "Thank you in advance for your help!", preferredStyle: UIAlertControllerStyle.alert)
+        let alert = UIAlertController(title: "Can you help deliver the item before the due time?", message: "Thank you in advance for your help!", preferredStyle: UIAlertControllerStyle.alert)
         let foundAction = UIAlertAction(title: "YES", style: UIAlertActionStyle.default) {
             act in
             self.didHelp()
@@ -310,9 +342,9 @@ class progressVC: UIViewController, MFMessageComposeViewControllerDelegate {
     }
     
     func didHelp() {
-        decisionActivityId = defaults.value(forKey: "decisionActivityId") as! String ?? ""
+        decisionActivityId = defaults.value(forKey: "decisionActivityId") as? String ?? ""
 
-        let param = ["user":(CURRENT_USER?.username)! ?? "", "taskId": currentTask?.taskId, "didHelp": true, "date":Date().timeIntervalSince1970, "decisionActivityId": decisionActivityId] as [String : Any]
+        let param = ["user":CURRENT_USER?.username ?? "", "taskId": currentTask?.taskId ?? "", "didHelp": true, "date":Date().timeIntervalSince1970, "decisionActivityId": decisionActivityId] as [String : Any]
         
         CommManager.instance.urlRequest(route: "helpActivity", parameters: param, completion: {
             json in

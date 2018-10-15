@@ -13,10 +13,19 @@ class profileVC: UIViewController {
     @IBOutlet weak var userNameLabel: UILabel!
     
     @IBOutlet weak var numHelpLabel: UILabel!
+    
+    let center = NotificationCenter.default
+    
+    var numHelpCount: Int?
+
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        numHelpCount = 0
 
         // Do any additional setup after loading the view.
+        center.addObserver(forName: NSNotification.Name(rawValue: "updateDetail"), object: nil, queue: OperationQueue.main, using: updateFields)
+
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -47,6 +56,9 @@ class profileVC: UIViewController {
                                 DispatchQueue.main.async {
                                     self.userNameLabel.text = (username as! String)
                                     self.numHelpLabel.text = String(describing: numHelp)
+                                    self.numHelpCount = numHelp as! Int
+                                    self.center.post(name: NSNotification.Name(rawValue: "updateDetail"), object: nil, userInfo: nil)
+                                    
                                 }
                             }
                         }
@@ -61,6 +73,10 @@ class profileVC: UIViewController {
             print(error)
         }
         
+    }
+    
+    func updateFields(notification: Notification) -> Void{
+        numHelpLabel.text = String(describing: self.numHelpCount!)
     }
     
     override func didReceiveMemoryWarning() {
