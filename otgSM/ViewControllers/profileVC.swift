@@ -17,6 +17,7 @@ class profileVC: UIViewController {
     let center = NotificationCenter.default
     
     var numHelpCount: Int?
+    var username: String?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -25,11 +26,12 @@ class profileVC: UIViewController {
 
         // Do any additional setup after loading the view.
         center.addObserver(forName: NSNotification.Name(rawValue: "updateDetail"), object: nil, queue: OperationQueue.main, using: updateFields)
-
     }
     
     override func viewWillAppear(_ animated: Bool) {
+//        DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(5), execute: {
         getUserInfo()
+//        })
     }
 
     func getUserInfo() {
@@ -53,13 +55,16 @@ class profileVC: UIViewController {
                         if let json = try JSONSerialization.jsonObject(with: data!, options: .allowFragments) as? [String: Any] {
 //                            print(json)
                             if let numHelp = json["numHelp"]{
-                                DispatchQueue.main.async {
-                                    self.userNameLabel.text = (username as! String)
-                                    self.numHelpLabel.text = String(describing: numHelp)
-                                    self.numHelpCount = numHelp as! Int
-                                    self.center.post(name: NSNotification.Name(rawValue: "updateDetail"), object: nil, userInfo: nil)
-                                    
-                                }
+                                self.numHelpCount = numHelp as! Int
+                                self.username = username as! String
+                                print("Help count is")
+                                print(self.numHelpCount)
+                                self.updateView()
+//                                DispatchQueue.main.async {
+//                                    self.userNameLabel.text = (username as! String)
+//                                    self.numHelpLabel.text = String(describing: numHelp)
+////                                    self.center.post(name: NSNotification.Name(rawValue: "updateDetail"), object: nil, userInfo: nil)
+//                                }
                             }
                         }
                     } catch let error as NSError {
@@ -73,6 +78,14 @@ class profileVC: UIViewController {
             print(error)
         }
         
+    }
+    
+    func updateView() {
+        DispatchQueue.main.async {
+            self.userNameLabel.text = (self.username as! String)
+            self.numHelpLabel.text = String(describing: self.numHelpCount as! Int)
+            //                                    self.center.post(name: NSNotification.Name(rawValue: "updateDetail"), object: nil, userInfo: nil)
+        }
     }
     
     func updateFields(notification: Notification) -> Void{

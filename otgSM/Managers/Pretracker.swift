@@ -107,7 +107,12 @@ class Pretracker: NSObject, CLLocationManagerDelegate, UNUserNotificationCenterD
         
         // Beacon region for cofffee lab.
         // beacon name: Pickup1
-        let beaconRegion = CLBeaconRegion(proximityUUID: UUID(uuidString:"B9407F30-F5F8-466E-AFF9-25556B57FE6D")!, major: 40740, minor: 56013, identifier: "taskBeacon")
+//        let beaconRegion = CLBeaconRegion(proximityUUID: UUID(uuidString:"B9407F30-F5F8-466E-AFF9-25556B57FE6D")!, major: 40740, minor: 56013, identifier: "taskBeacon")
+        
+        
+        // beacon name: Pickup2
+        let beaconRegion = CLBeaconRegion(proximityUUID: UUID(uuidString:"B9407F30-F5F8-466E-AFF9-25556B57FE6D")!, major: 63530, minor: 47088, identifier: "taskBeacon")
+        
         
         // this is yk geofence for testing.
         let ykcenter = CLLocationCoordinate2D(latitude: 42.053867, longitude: -87.682034)

@@ -37,6 +37,8 @@ class progressVC: UIViewController, MFMessageComposeViewControllerDelegate {
     @IBOutlet weak var instructLabel: UILabel!
     var decisionActivityId: String?
     
+    var dueTime: String?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -50,6 +52,7 @@ class progressVC: UIViewController, MFMessageComposeViewControllerDelegate {
 
         // add observer for updating the fields.
         center.addObserver(forName: NSNotification.Name(rawValue: "updateDetail"), object: nil, queue: OperationQueue.main, using: updateFields)
+        self.dueTime = "";
 
     }
     
@@ -150,10 +153,13 @@ class progressVC: UIViewController, MFMessageComposeViewControllerDelegate {
                     
                     self.currentTask = Task(requester: requester as! String, taskLocation: taskLocation as! String, dropOffLocation: dropOffLocation as! String, taskDescription: taskDescription as! String, requestTime: requestTime as! NSNumber, deadline: deadline as NSNumber, taskId: taskId as! String)
                     self.getUserInfo()
+                    
                     let dayTimePeriodFormatter = DateFormatter()
                     dayTimePeriodFormatter.locale = Locale(identifier: "en_US")
-                    dayTimePeriodFormatter.dateFormat = "MMM dd hh:mm"
-                    dayTimePeriodFormatter.timeZone = NSTimeZone(name: "CST") as TimeZone?
+                    dayTimePeriodFormatter.dateFormat = "MMMM d h:mm a"
+                    dayTimePeriodFormatter.timeZone = TimeZone(abbreviation: "CST")
+                    dayTimePeriodFormatter.amSymbol = "AM"
+                    dayTimePeriodFormatter.pmSymbol = "PM"
                     
                     let dateString = dayTimePeriodFormatter.string(from: NSDate(timeIntervalSince1970: TimeInterval(deadline)) as Date)
                     
@@ -220,9 +226,14 @@ class progressVC: UIViewController, MFMessageComposeViewControllerDelegate {
                                         self.dropOffLocationField.text = task.dropOffLocation
                                         
                                         let dayTimePeriodFormatter = DateFormatter()
-                                        dayTimePeriodFormatter.dateFormat = "MMM dd hh:mm"
+                                        dayTimePeriodFormatter.locale = Locale(identifier: "en_US")
+                                        dayTimePeriodFormatter.dateFormat = "h:mm a 'on' MMMM d"
+                                        dayTimePeriodFormatter.timeZone = TimeZone(abbreviation: "CST")
+                                        dayTimePeriodFormatter.amSymbol = "AM"
+                                        dayTimePeriodFormatter.pmSymbol = "PM"
                                         
                                         let dateString = dayTimePeriodFormatter.string(from: NSDate(timeIntervalSince1970: TimeInterval(task.deadline)) as Date)
+                                        self.dueTime = dateString
                                     
                                         self.dueLabel.text = "Due: " + dateString
                                         self.helpButton.isHidden = false
@@ -273,8 +284,10 @@ class progressVC: UIViewController, MFMessageComposeViewControllerDelegate {
                 
                 let dayTimePeriodFormatter = DateFormatter()
                 dayTimePeriodFormatter.locale = Locale(identifier: "en_US")
-                dayTimePeriodFormatter.dateFormat = "MMM dd hh:mm"
-                dayTimePeriodFormatter.timeZone = NSTimeZone(name: "CST")! as TimeZone
+                dayTimePeriodFormatter.dateFormat = "h:mm a 'on' MMMM d"
+                dayTimePeriodFormatter.timeZone = TimeZone(abbreviation: "CST")
+                dayTimePeriodFormatter.amSymbol = "AM"
+                dayTimePeriodFormatter.pmSymbol = "PM"
                 
                 let dateString = dayTimePeriodFormatter.string(from: NSDate(timeIntervalSince1970: TimeInterval(task.deadline)) as Date)
                 
@@ -302,20 +315,21 @@ class progressVC: UIViewController, MFMessageComposeViewControllerDelegate {
     }
 
     @IBAction func clickAcceptButton(_ sender: UIButton) {
-        showPopUp()
+        showPopUp(self.dueTime!)
     }
     
     @IBAction func clickDeclineButton(_ sender: Any) {
         didDecline()
-        switchToNextTab()
     }
     
     func switchToNextTab() {
+//        getUserInfo()
         tabBarController?.selectedIndex = 1
     }
     
-    func showPopUp() {
-        let alert = UIAlertController(title: "Can you help deliver the item before the due time?", message: "Thank you in advance for your help!", preferredStyle: UIAlertControllerStyle.alert)
+    func showPopUp(_ dueTime: String) {
+        let title = "Can you help deliver the item before " + dueTime + "?"
+        let alert = UIAlertController(title: title, message: "Thank you in advance for your help!", preferredStyle: UIAlertControllerStyle.alert)
         let foundAction = UIAlertAction(title: "YES", style: UIAlertActionStyle.default) {
             act in
             self.didHelp()
@@ -343,22 +357,33 @@ class progressVC: UIViewController, MFMessageComposeViewControllerDelegate {
     
     func didHelp() {
         decisionActivityId = defaults.value(forKey: "decisionActivityId") as? String ?? ""
-
-        let param = ["user":CURRENT_USER?.username ?? "", "taskId": currentTask?.taskId ?? "", "didHelp": true, "date":Date().timeIntervalSince1970, "decisionActivityId": decisionActivityId] as [String : Any]
+        
+        let lat = Pretracker.sharedManager.currentLocation!.coordinate.latitude ?? 0.0
+        let lon = Pretracker.sharedManager.currentLocation?.coordinate.longitude ?? 0.0
+        
+        let param = ["user":CURRENT_USER?.username ?? "", "taskId": currentTask?.taskId ?? "", "didHelp": true, "date":Date().timeIntervalSince1970, "decisionActivityId": decisionActivityId, "lat": lat, "lon": lon] as [String : Any]
         
         CommManager.instance.urlRequest(route: "helpActivity", parameters: param, completion: {
             json in
+            DispatchQueue.main.async {
+                self.switchToNextTab()
+            }
 //            print("thanks")
         })
-        switchToNextTab()
     }
     
     func didDecline() {
 //        print("did decline")
-        let param = ["user":(CURRENT_USER?.username)! ?? "", "taskId": currentTask?.taskId, "didHelp": false, "date":Date().timeIntervalSince1970, "decisionActivityId": decisionActivityId] as [String : Any]
+        let lat = Pretracker.sharedManager.currentLocation?.coordinate.latitude ?? 0.0
+        let lon = Pretracker.sharedManager.currentLocation!.coordinate.longitude ?? 0.0
+        
+        let param = ["user":(CURRENT_USER?.username)! ?? "", "taskId": currentTask?.taskId, "didHelp": false, "date":Date().timeIntervalSince1970, "decisionActivityId": decisionActivityId, "lat": lat, "lon": lon] as [String : Any]
         
         CommManager.instance.urlRequest(route: "helpActivity", parameters: param, completion: {
             json in
+            DispatchQueue.main.async {
+                self.switchToNextTab()
+            }
 //            print("thanks")
         })
     }

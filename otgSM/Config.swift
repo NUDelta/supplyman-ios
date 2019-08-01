@@ -15,7 +15,7 @@ struct Config {
     
     init() {
         if Config.DEBUG {
-            Config.URL = "http://10.105.201.112:5000"
+            Config.URL = "http://10.105.23.62:5000"
 //            Config.URL = "http://supplyman-datacollection.herokuapp.com"
         } else {
             Config.URL = "http://supplyman-datacollection.herokuapp.com"
